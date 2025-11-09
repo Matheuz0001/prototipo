@@ -11,24 +11,29 @@ class Work extends Model
 
     protected $fillable = [
         'user_id',
-        'title',
-        'advisor',
-        'co_authors_text',
+        'event_id',
         'work_type_id',
-        'file_path', // Para o upload
-        'status', // 0=Pendente, 1=Aprovado, 2=Reprovado
+        'title',
+        'abstract',
+        'file_path',
+        'file_name',
+        'advisor',
+        'co_authors',
+        'status'
     ];
 
-    /**
-     * Relacionamentos
-     */
-    public function submitter(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 
-    public function type(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function event()
     {
-        return $this->belongsTo(WorkType::class, 'work_type_id');
+        return $this->belongsTo(Event::class);
+    }
+
+    public function workType()
+    {
+        return $this->belongsTo(WorkType::class);
     }
 }

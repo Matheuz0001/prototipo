@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\UserType; // 👈 Importe o Model
+use App\Models\UserType; // 1. Importar o Model
 
 class UserTypeSeeder extends Seeder
 {
@@ -12,9 +12,9 @@ class UserTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        // Vamos criar nossos 3 tipos de usuário
-        UserType::create(['type' => 'Organizador']); // ID será 1
-        UserType::create(['type' => 'Participante']); // ID será 2
-        UserType::create(['type' => 'Avaliador']);   // ID será 3
+        // 2. Inserir os tipos de usuário
+        UserType::create(['type' => 'Participante']);
+        UserType::create(['type' => 'Organizador']);
+        UserType::create(['type' => 'Avaliador']);
     }
 }
