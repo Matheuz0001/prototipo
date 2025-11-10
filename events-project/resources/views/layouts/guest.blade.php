@@ -7,30 +7,27 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Fonts (Já configurado no app.css) -->
-        
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans text-slate-900 antialiased">
         <!-- 
           MUDANÇA DE COR:
-          bg-gray-100 dark:bg-gray-900 -> bg-slate-100 dark:bg-slate-900
-          Fundo da página de login/registo.
+          Forçamos o fundo 'slate-100' (branco-gelo)
         -->
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-slate-100 dark:bg-slate-900">
+        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-slate-100">
             <div>
                 <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-slate-500" />
+                    <!-- Cor da logo 'blue-600' -->
+                    <x-application-logo class="w-20 h-20 fill-current text-blue-600" />
                 </a>
             </div>
 
             <!-- 
               MUDANÇA DE COR:
-              bg-white dark:bg-gray-800 -> bg-white dark:bg-slate-800
-              Card de login/registo.
+              Forçamos o fundo 'white' (branco puro)
             -->
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-slate-800 shadow-md overflow-hidden sm:rounded-lg">
+            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
                 {{ $slot }}
             </div>
         </div>

@@ -1,9 +1,9 @@
 <!-- 
   MUDANÇAS:
-  1. Paleta de cores trocada de 'gray' para 'slate'.
-  2. Links do Organizador e Avaliador (que já funcionam) foram adicionados.
+  1. Todas as classes 'dark:' foram removidas.
+  2. A cor de destaque 'indigo' foi trocada por 'blue' nos componentes (nav-link).
 -->
-<nav x-data="{ open: false }" class="bg-white dark:bg-slate-800 border-b border-slate-100 dark:border-slate-700">
+<nav x-data="{ open: false }" class="bg-white border-b border-slate-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -11,24 +11,17 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-slate-800 dark:text-slate-200" />
+                        <x-application-logo class="block h-9 w-auto fill-current text-slate-800" />
                     </a>
                 </div>
 
                 <!-- Navigation Links (Desktop) -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     
-                    <!-- Link do Painel (Todos veem) -->
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Painel') }}
                     </x-nav-link>
 
-                    <!-- Links do Participante (ID == 1) -->
-                    @if(Auth::check() && Auth::user()->user_type_id == 1)
-                        {{-- (Pode adicionar "Minhas Inscrições" aqui, embora já estejam no Painel) --}}
-                    @endif
-
-                    <!-- Links do Organizador (ID == 2) -->
                     @if(Auth::check() && Auth::user()->user_type_id == 2)
                         <x-nav-link :href="route('events.index')" :active="request()->routeIs('events.*')">
                             {{ __('Meus Eventos') }}
@@ -36,15 +29,12 @@
                         <x-nav-link :href="route('organization.payments.index')" :active="request()->routeIs('organization.payments.index')">
                             {{ __('Validar Pagamentos') }}
                         </x-nav-link>
-                        {{-- (Este link estava faltando no seu arquivo anterior) --}}
                         <x-nav-link :href="route('submissions.index')" :active="request()->routeIs('submissions.index')">
                             {{ __('Gerenciar Trabalhos') }}
                         </x-nav-link>
                     @endif
 
-                    <!-- Links do Avaliador (ID == 3) -->
                     @if(Auth::check() && Auth::user()->user_type_id == 3)
-                        {{-- (Este link estava faltando no seu arquivo anterior) --}}
                         <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                             {{ __('Trabalhos a Avaliar') }}
                         </x-nav-link>
@@ -57,9 +47,8 @@
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-300 focus:outline-none transition ease-in-out duration-150">
+                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-slate-500 bg-white hover:text-slate-700 focus:outline-none transition ease-in-out duration-150">
                             <div>{{ Auth::user()->name }}</div>
-
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -72,11 +61,8 @@
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
-
-                        <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
@@ -89,7 +75,7 @@
 
             <!-- Hamburger (Mobile) -->
             <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-slate-400 dark:text-slate-500 hover:text-slate-500 dark:hover:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 focus:outline-none focus:bg-slate-100 dark:focus:bg-slate-900 focus:text-slate-500 dark:focus:text-slate-400 transition duration-150 ease-in-out">
+                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-slate-500 hover:bg-slate-100 focus:outline-none focus:bg-slate-100 focus:text-slate-500 transition duration-150 ease-in-out">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -102,17 +88,10 @@
     <!-- Responsive Navigation Menu (Mobile) -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Painel') }}
             </x-responsive-nav-link>
 
-            <!-- Links do Participante (ID == 1) -->
-            @if(Auth::check() && Auth::user()->user_type_id == 1)
-                {{-- (Links do Participante aqui) --}}
-            @endif
-
-            <!-- Links do Organizador (ID == 2) -->
             @if(Auth::check() && Auth::user()->user_type_id == 2)
                 <x-responsive-nav-link :href="route('events.index')" :active="request()->routeIs('events.*')">
                     {{ __('Meus Eventos') }}
@@ -125,31 +104,25 @@
                 </x-responsive-nav-link>
             @endif
             
-            <!-- Links do Avaliador (ID == 3) -->
             @if(Auth::check() && Auth::user()->user_type_id == 3)
                  <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                     {{ __('Trabalhos a Avaliar') }}
                 </x-responsive-nav-link>
             @endif
-
         </div>
 
         <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-slate-200 dark:border-slate-600">
+        <div class="pt-4 pb-1 border-t border-slate-200">
             <div class="px-4">
-                <div class="font-medium text-base text-slate-800 dark:text-slate-200">{{ Auth::user()->name }}</div>
+                <div class="font-medium text-base text-slate-800">{{ Auth::user()->name }}</div>
                 <div class="font-medium text-sm text-slate-500">{{ Auth::user()->email }}</div>
             </div>
-
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
-
-                <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-
                     <x-responsive-nav-link :href="route('logout')"
                             onclick="event.preventDefault();
                                         this.closest('form').submit();">

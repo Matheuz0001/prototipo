@@ -13,6 +13,7 @@ use App\Http\Controllers\InscriptionTypeController;
 use App\Http\Controllers\InscriptionController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\WorkController;
+use App\Http\Controllers\SubmissionController; // 👈 1. ADICIONE ESTE IMPORT
 
 /*
 |--------------------------------------------------------------------------
@@ -43,28 +44,39 @@ Route::get('/eventos/{event}', [PublicEventController::class, 'show'])->name('ev
 
 // Rota 'dashboard' com LÓGICA INTELIGENTE (RF-F7) - VERSÃO CORRIGIDA
 Route::get('/dashboard', function () {
-
+    
     $user = Auth::user();
 
-    // 👇 LÓGICA INVERTIDA PARA BATER COM O SEEDER
     if ($user->user_type_id == 1) { // 1 = Participante
-
+        
         $inscriptions = $user->inscriptions()
-            ->with('event', 'inscriptionType', 'payment')
-            ->orderBy('created_at', 'desc')
-            ->get();
+                            ->with('event', 'inscriptionType', 'payment', 'work') // Carregar 'work' aqui
+                            ->orderBy('created_at', 'desc')
+                            ->get();
 
         return view('dashboard', [
             'userInscriptions' => $inscriptions
         ]);
+    
     } elseif ($user->user_type_id == 2) { // 2 = Organizador
-        return view('dashboard');
+        return view('dashboard'); 
+
     } elseif ($user->user_type_id == 3) { // 3 = Avaliador
-        return view('dashboard');
+        
+        // Busca as 'reviews' (atribuições) deste avaliador
+        $reviews = $user->reviews()
+                       ->with('work.user') // Carrega o trabalho E o autor do trabalho
+                       ->where('status', 0) // Mostra apenas avaliações PENDENTES
+                       ->get();
+
+        return view('dashboard', [
+            'pendingReviews' => $reviews
+        ]);
     }
 
     // Fallback
     return view('dashboard');
+
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
@@ -81,10 +93,10 @@ Route::middleware('auth')->group(function () {
 */
 
 Route::middleware(['auth', 'verified'])->group(function () {
-
+    
     // ----- Rotas que SÓ o Organizador pode acessar -----
     Route::middleware(['organizer'])->group(function () {
-
+        
         // CRUD de Eventos
         Route::resource('events', EventController::class);
 
@@ -101,15 +113,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/inscription-types/{inscriptionType}/edit', [InscriptionTypeController::class, 'edit'])->name('inscription_types.edit');
         Route::put('/inscription-types/{inscriptionType}', [InscriptionTypeController::class, 'update'])->name('inscription_types.update');
         Route::delete('/inscription-types/{inscriptionType}', [InscriptionTypeController::class, 'destroy'])->name('inscription_types.destroy');
-
+        
         // ROTAS DE VALIDAÇÃO DE PAGAMENTO (RF-F3)
         Route::get('/organizacao/pagamentos', [PaymentController::class, 'index'])->name('organization.payments.index');
         Route::post('/organizacao/pagamentos/{inscription}/aprovar', [PaymentController::class, 'approve'])->name('organization.payments.approve');
         Route::post('/organizacao/pagamentos/{inscription}/recusar', [PaymentController::class, 'reject'])->name('organization.payments.reject');
+
+        // 👇 2. ADICIONE ESTE BLOCO DE ROTAS 👇
+        // Rotas de Gerenciamento de Submissões (RF-F6)
+        Route::get('/organizacao/submissoes', [SubmissionController::class, 'index'])->name('submissions.index');
+        Route::post('/organizacao/submissoes/{work}/atribuir', [SubmissionController::class, 'assign'])->name('submissions.assign');
     });
 
     // ----- Rotas do Participante (e outros) -----
-
+    
     // Rotas de Inscrição (RF-F1)
     Route::get('/eventos/{event}/inscrever', [InscriptionController::class, 'create'])->name('inscriptions.create');
     Route::post('/eventos/{event}/inscrever', [InscriptionController::class, 'store'])->name('inscriptions.store');
@@ -118,10 +135,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/inscricoes/{inscription}/pagar', [PaymentController::class, 'create'])->name('payment.create');
     Route::post('/inscricoes/{inscription}/pagar', [PaymentController::class, 'store'])->name('payment.store');
 
-    // 👇 ROTAS DE TRABALHOS (RF-F5) - ADICIONADAS AQUI
+    // ROTAS DE TRABALHOS (RF-F5)
     Route::get('/events/{event}/works/create', [WorkController::class, 'create'])->name('works.create');
     Route::post('/events/{event}/works', [WorkController::class, 'store'])->name('works.store');
     Route::get('/works/{work}/download', [WorkController::class, 'download'])->name('works.download');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

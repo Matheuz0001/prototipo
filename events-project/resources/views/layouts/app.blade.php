@@ -7,28 +7,24 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Fonts (Já configurado no app.css) -->
-        
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
         <!-- 
           MUDANÇA DE COR:
-          bg-gray-100 dark:bg-gray-900 -> bg-slate-100 dark:bg-slate-900
-          Este é o fundo "de fora" do sistema.
+          Forçamos o fundo 'slate-100' (branco-gelo)
         -->
-        <div class="min-h-screen bg-slate-100 dark:bg-slate-900">
+        <div class="min-h-screen bg-slate-100">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
             @if (isset($header))
                 <!-- 
                   MUDANÇA DE COR:
-                  bg-white dark:bg-gray-800 -> bg-white dark:bg-slate-800
-                  Este é o fundo dos "cards" e "cabeçalhos".
+                  Forçamos o fundo 'white' (branco puro)
                 -->
-                <header class="bg-white dark:bg-slate-800 shadow">
+                <header class="bg-white shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
