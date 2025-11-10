@@ -16,8 +16,9 @@ return new class extends Migration
             $table->foreignId('work_id')->constrained('works')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // O Avaliador
             
-            // 1=Aprovado, 2=Reprovado
-            $table->tinyInteger('status'); 
+            // 👇 ESTA É A LINHA CORRIGIDA 👇
+            // 0=Pendente, 1=Aprovado, 2=Reprovado
+            $table->tinyInteger('status')->default(0); 
             
             $table->text('comments')->nullable();
             $table->timestamps();

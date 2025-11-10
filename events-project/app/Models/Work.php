@@ -4,36 +4,47 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Work extends Model
 {
     use HasFactory;
 
+    /**
+     * Os atributos que podem ser preenchidos em massa.
+     */
     protected $fillable = [
         'user_id',
-        'event_id',
         'work_type_id',
         'title',
         'abstract',
-        'file_path',
-        'file_name',
         'advisor',
-        'co_authors',
-        'status'
+        'co_authors_text',
+        'file_path',
     ];
 
-    public function user()
+    /**
+     * Um trabalho pertence a um Utilizador (Autor).
+     */
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function event()
-    {
-        return $this->belongsTo(Event::class);
-    }
-
-    public function workType()
+    /**
+     * Um trabalho pertence a um Tipo de Trabalho.
+     */
+    public function workType(): BelongsTo
     {
         return $this->belongsTo(WorkType::class);
+    }
+
+    /**
+     * Um trabalho está ligado a uma Inscrição.
+     */
+    public function inscription(): HasOne
+    {
+        return $this->hasOne(Inscription::class);
     }
 }

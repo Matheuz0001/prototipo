@@ -17,6 +17,7 @@ class InscriptionType extends Model
         'event_id',
         'type', // Ex: "Autor", "Ouvinte"
         'allow_work_submission', // true/false
+        'price', // Preço do tipo de inscrição
     ];
 
     /**

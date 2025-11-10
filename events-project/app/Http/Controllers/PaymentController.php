@@ -74,7 +74,10 @@ class PaymentController extends Controller
              $pixType = PaymentType::where('type', 'PIX')->first();
              $payment->payment_type_id = $pixType->id ?? 1;
              $payment->inscription_id = $inscription->id;
-             $payment->amount = $inscription->event->registration_fee;
+             
+             // 👇 ESTA É A LINHA CORRIGIDA 👇
+             // Ela pega o preço do TIPO DE INSCRIÇÃO, e não do EVENTO.
+             $payment->amount = $inscription->inscriptionType->price;
         }
 
         // 3. Salvar o novo arquivo
@@ -99,6 +102,7 @@ class PaymentController extends Controller
     public function approve(Inscription $inscription)
     {
         // 1. Segurança: Garante que o organizador é o dono do evento
+        // CORREÇÃO DE LÓGICA: Deve checar o user_id no EVENTO, não na inscrição
         if (Auth::id() !== $inscription->event->user_id) {
             abort(403, 'Acesso não autorizado.');
         }
@@ -121,6 +125,7 @@ class PaymentController extends Controller
     public function reject(Request $request, Inscription $inscription)
     {
         // 1. Segurança
+        // CORREÇÃO DE LÓGICA: Deve checar o user_id no EVENTO, não na inscrição
         if (Auth::id() !== $inscription->event->user_id) {
             abort(403, 'Acesso não autorizado.');
         }
@@ -128,10 +133,10 @@ class PaymentController extends Controller
         // Valida o motivo da recusa APENAS se estiver vindo do formulário de recusa
         if ($request->has('rejection_reason')) {
              $request->validate([
-                'rejection_reason' => 'required|string|min:10',
+                 'rejection_reason' => 'required|string|min:10',
             ]);
 
-            $rejectionReason = $request->rejection_reason;
+             $rejectionReason = $request->rejection_reason;
         } else {
              // Se for um POST sem motivo (deve vir com motivo, mas como fallback)
              $rejectionReason = 'Motivo de recusa não informado.';

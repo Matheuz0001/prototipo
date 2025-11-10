@@ -17,7 +17,12 @@
                         <h4 class="text-lg font-semibold mb-3 text-indigo-600 dark:text-indigo-400">
                             Método: PIX - Copia e Cola
                         </h4>
-                        <p class="text-xl font-bold mb-2">Valor a Pagar: R$ {{ number_format($inscription->event->registration_fee, 2, ',', '.') }}</p>
+                        
+                        <!-- 
+                        👇 ESTA É A LINHA CORRIGIDA 👇
+                        Ela agora pega o preço do TIPO de inscrição (Autor, Ouvinte, etc.)
+                        -->
+                        <p class="text-xl font-bold mb-2">Valor a Pagar: R$ {{ number_format($inscription->inscriptionType->price, 2, ',', '.') }}</p>
                         
                         @if ($inscription->event->pix_key)
                             <p class="text-sm text-gray-600 dark:text-gray-400">

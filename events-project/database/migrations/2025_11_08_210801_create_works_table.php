@@ -6,26 +6,35 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
         Schema::create('works', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('event_id')->constrained()->onDelete('cascade');
-            $table->foreignId('work_type_id')->constrained('work_types')->onDelete('cascade');
-            $table->string('title');
-            $table->text('abstract')->nullable();
-            $table->string('file_path');
-            $table->string('file_name');
-            $table->string('advisor')->nullable();
-            $table->text('co_authors')->nullable();
-            $table->enum('status', ['submitted', 'under_review', 'approved', 'rejected'])->default('submitted');
-            $table->timestamps();
             
-            $table->unique(['user_id', 'event_id']);
+            // Chave de quem submeteu (o participante)
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            
+            // Chave do tipo de trabalho (ex: Artigo Completo, Resumo)
+            $table->foreignId('work_type_id')->constrained('work_types');
+
+            $table->string('title'); // Título do trabalho
+            $table->text('abstract'); // Resumo do trabalho
+            $table->string('advisor'); // Nome do Orientador
+            $table->string('co_authors_text')->nullable(); // Coautores (texto simples)
+            
+            // 👇 A COLUNA MAIS IMPORTANTE QUE FALTAVA 👇
+            $table->string('file_path'); // Caminho para o PDF/DOC armazenado
+            
+            $table->timestamps();
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
         Schema::dropIfExists('works');

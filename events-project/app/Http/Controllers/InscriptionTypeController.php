@@ -36,6 +36,7 @@ class InscriptionTypeController extends Controller
 
         $validatedData = $request->validate([
             'type' => 'required|string|max:255',
+            'price' => 'required|numeric|min:0', // 👈 LINHA ADICIONADA
             'allow_work_submission' => 'nullable|boolean',
         ]);
 
@@ -76,6 +77,7 @@ class InscriptionTypeController extends Controller
 
         $validatedData = $request->validate([
             'type' => 'required|string|max:255',
+            'price' => 'required|numeric|min:0', // 👈 LINHA ADICIONADA
             'allow_work_submission' => 'nullable|boolean',
         ]);
 

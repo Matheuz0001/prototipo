@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('inscription_types', function (Blueprint $table) {
             $table->id();
+            $table->decimal('price', 10, 2)->default(0.00); // Coluna do preço
             $table->foreignId('event_id')->constrained('events')->onDelete('cascade'); // A que evento esse tipo pertence
             $table->string('type'); // Ex: Ouvinte, Autor
             $table->boolean('allow_work_submission')->default(false); // Adicionado da ERS (RF_B3)
