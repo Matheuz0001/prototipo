@@ -7,25 +7,33 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
+        <!-- Fonts (Já configurado no app.css) -->
+        
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+        <!-- 
+          MUDANÇA DE COR:
+          bg-gray-100 dark:bg-gray-900 -> bg-slate-100 dark:bg-slate-900
+          Este é o fundo "de fora" do sistema.
+        -->
+        <div class="min-h-screen bg-slate-100 dark:bg-slate-900">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white dark:bg-gray-800 shadow">
+            @if (isset($header))
+                <!-- 
+                  MUDANÇA DE COR:
+                  bg-white dark:bg-gray-800 -> bg-white dark:bg-slate-800
+                  Este é o fundo dos "cards" e "cabeçalhos".
+                -->
+                <header class="bg-white dark:bg-slate-800 shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
                 </header>
-            @endisset
+            @endif
 
             <!-- Page Content -->
             <main>
