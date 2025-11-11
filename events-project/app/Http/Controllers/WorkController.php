@@ -8,7 +8,7 @@ use App\Models\WorkType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Storage; // 👈 ADICIONADO (Necessário para o download)
 
 class WorkController extends Controller
 {
@@ -34,7 +34,7 @@ class WorkController extends Controller
         }
 
         // 3. Buscar os tipos de trabalho (ex: Artigo, Resumo) para o dropdown
-        $workTypes = WorkType::all(); // Pode ser melhorado para ser por evento
+        $workTypes = WorkType::all(); 
 
         return view('works.create', [
             'event' => $event,
@@ -100,5 +100,29 @@ class WorkController extends Controller
 
         // 5. Redirecionar
         return redirect()->route('dashboard')->with('success', 'Trabalho submetido com sucesso!');
+    }
+
+
+     
+    public function download(Work $work)
+    {
+        $user = Auth::user();
+
+        // Lógica de Segurança
+        $isAuthor = $user->id === $work->user_id;
+        $isOrganizer = $user->id === $work->inscription->event->user_id;
+        $isReviewer = $work->reviews()->where('user_id', $user->id)->exists();
+
+        if (!$isAuthor && !$isOrganizer && !$isReviewer) {
+            abort(403, 'Acesso não autorizado para baixar este ficheiro.');
+        }
+
+        // Verifica se o ficheiro existe no disco
+        if (!Storage::disk('public')->exists($work->file_path)) {
+            return back()->with('error', 'Ficheiro não encontrado. Pode ter sido removido.');
+        }
+        
+        // Força o download no navegador
+        return Storage::disk('public')->download($work->file_path, $work->title . '.pdf'); // (Podemos melhorar o nome do ficheiro)
     }
 }

@@ -5,15 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany; // 👈 ADICIONE ESTE IMPORT
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Work extends Model
 {
     use HasFactory;
 
-    /**
-     * Os atributos que podem ser preenchidos em massa.
-     */
     protected $fillable = [
         'user_id',
         'work_type_id',
@@ -24,6 +22,8 @@ class Work extends Model
         'file_path',
     ];
 
+    // ... (as suas funções user(), workType(), e inscription() existentes ficam aqui) ...
+    
     /**
      * Um trabalho pertence a um Utilizador (Autor).
      */
@@ -46,5 +46,14 @@ class Work extends Model
     public function inscription(): HasOne
     {
         return $this->hasOne(Inscription::class);
+    }
+
+    /**
+     * 👇 FUNÇÃO ADICIONADA 👇
+     * Um trabalho pode ter muitas avaliações (reviews).
+     */
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
     }
 }

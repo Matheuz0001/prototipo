@@ -18,7 +18,7 @@ class Review extends Model
     ];
 
     /**
-     * Uma avaliação pertence a um Trabalho.
+     * Uma avaliação (review) pertence a um Trabalho (Work).
      */
     public function work(): BelongsTo
     {
@@ -26,7 +26,7 @@ class Review extends Model
     }
 
     /**
-     * Uma avaliação pertence a um Utilizador (Avaliador).
+     * Uma avaliação (review) pertence a um Utilizador (Avaliador).
      */
     public function user(): BelongsTo
     {

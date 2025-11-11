@@ -1,123 +1,139 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-slate-900 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Painel') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <!-- Card "You're logged in" -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            
+            <!-- 
+              👇 MUDANÇA DE ESTILO "PREMIUM" 👇
+              shadow-sm sm:rounded-lg -> shadow-xl sm:rounded-2xl
+            -->
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-2xl">
                 <div class="p-6 text-slate-900">
                     {{ __("You're logged in!") }}
                     
                     @if(Auth::user()->user_type_id == 1)
-                        <p>Você está logado como **Participante**.</p>
+                        <p>Você está logado como <strong>Participante</strong>.</p>
                     @elseif(Auth::user()->user_type_id == 2)
-                        <p>Você está logado como **Organizador**.</p>
+                        <p>Você está logado como <strong>Organizador</strong>.</p>
                     @elseif(Auth::user()->user_type_id == 3)
-                        <p>Você está logado como **Avaliador**.</p>
+                        <p>Você está logado como <strong>Avaliador</strong>.</p>
                     @endif
                 </div>
             </div>
 
-            <!-- ===== SEÇÃO DO PARTICIPANTE (ID == 1) ===== -->
+            <!-- ===== PAINEL DO PARTICIPANTE (ID 1) ===== -->
             @if(Auth::user()->user_type_id == 1)
-                <div class="mt-6 bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <!-- 
+                  👇 MUDANÇA DE ESTILO "PREMIUM" 👇
+                  shadow-sm sm:rounded-lg -> shadow-xl sm:rounded-2xl
+                -->
+                <div class="mt-6 bg-white overflow-hidden shadow-xl sm:rounded-2xl">
                     <div class="p-6 text-slate-900">
                         <h3 class="text-lg font-semibold mb-4">Minhas Inscrições</h3>
 
                         @forelse($userInscriptions ?? [] as $inscription)
-                            <div class="card mb-3 border border-slate-300 p-4 rounded-lg">
+                            <div class="card mb-4 p-4 border rounded-lg border-slate-200">
                                 <div class="card-body">
-                                    <h5 class="card-title font-bold text-lg">{{ $inscription->event->title }}</h5>
+                                    <h5 class="card-title font-bold text-lg text-slate-800">{{ $inscription->event->title }}</h5>
                                     
-                                    <!-- ÁREA DE STATUS/AÇÃO -->
-                                    <p class="card-text mb-2">
-                                        Status: 
+                                    <!-- Área de Status/Ação -->
+                                    <div class="card-text mt-2">
+                                        <span class="font-medium">Status:</span> 
                                         
                                         @if($inscription->status == 1)
-                                            <span class="font-medium" style="color: green;">Confirmada</span>
+                                            <!-- 1. Confirmada -->
+                                            <span class="font-medium text-green-600">Confirmada</span>
+
                                         @elseif($inscription->payment && $inscription->payment->status == 1)
-                                            <span class="font-medium" style="color: orange;">Pagamento em Análise</span>
+                                            <!-- 2. Em Análise -->
+                                            <span class="font-medium text-orange-600">Pagamento em Análise</span>
+                                            <small class="block text-slate-500 mt-1">Seu comprovante foi enviado e está aguardando aprovação.</small>
+
                                         @elseif($inscription->payment && $inscription->payment->status == 3)
-                                            <span class="font-medium" style="color: red;">Pagamento Recusado</span>
-                                            <small style="display: block; margin-top: 5px;">Motivo: {{ $inscription->payment->rejection_reason ?? 'Não especificado' }}</small>
-                                            <a href="{{ route('payment.create', $inscription) }}" class="text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5" style="display: inline-block; margin-top: 10px; text-decoration: none;">
+                                            <!-- 3. Recusado -->
+                                            <span class="font-medium text-red-600">Pagamento Recusado</span>
+                                            <small class="block text-slate-500 mt-1">Motivo: {{ $inscription->payment->rejection_reason ?? 'Não especificado' }}</small>
+                                            
+                                            <a href="{{ route('payment.create', $inscription) }}" class="inline-block mt-3 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md shadow-sm hover:bg-blue-700">
                                                 Enviar Novo Comprovante
                                             </a>
+
                                         @else
-                                            <span class="font-medium" style="color: #0d6efd;">Aguardando Pagamento</span>
-                                            <a href="{{ route('payment.create', $inscription) }}" class="text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5" style="display: inline-block; margin-top: 10px; text-decoration: none;">
+                                            <!-- 4. Aguardando Pagamento -->
+                                            <span class="font-medium text-blue-600">Aguardando Pagamento</span>
+                                            <a href="{{ route('payment.create', $inscription) }}" class="inline-block mt-3 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md shadow-sm hover:bg-blue-700">
                                                 Realizar Pagamento
                                             </a>
                                         @endif
-                                    </p>
+                                    </div>
                                     
-                                    <a href="{{ route('events.public.show', $inscription->event) }}" class="text-blue-600 hover:text-blue-800 mt-2" style="display: block;">
-                                        Ver detalhes do evento
-                                    </a>
+                                    <!-- Área de Submissão de Trabalho (se houver) -->
+                                    <div class="border-t border-slate-200 mt-4 pt-4">
+                                        @if($inscription->work_id)
+                                            <!-- 3c. Já submeteu -->
+                                            <p class="font-medium text-green-600">Trabalho submetido com sucesso!</p>
+                                            <small class="block text-slate-500">(Título: {{ $inscription->work->title }})</small>
+                                        
+                                        @elseif($inscription->status == 1 && $inscription->inscriptionType->allow_work_submission)
+                                            <!-- 3a. Pode submeter -->
+                                            <a href="{{ route('works.create', $inscription->event) }}" class="inline-block px-4 py-2 text-sm font-medium text-white bg-slate-700 rounded-md shadow-sm hover:bg-slate-800">
+                                                Submeter Trabalho
+                                            </a>
+                                        @elseif($inscription->status != 1 && $inscription->inscriptionType->allow_work_submission)
+                                            <!-- 3b. Pagamento pendente -->
+                                            <p class="text-sm text-slate-500">A submissão de trabalho será liberada após a confirmação do pagamento.</p>
+                                        @endif
+                                    </div>
 
-                                    @if($inscription->status == 1 && $inscription->inscriptionType->allow_work_submission)
-                                        <div class="mt-4 pt-4 border-t border-slate-200">
-                                            @if($inscription->work_id)
-                                                <p class="font-semibold text-green-600">Trabalho submetido com sucesso!</p>
-                                                <small>(Título: {{ $inscription->work->title }})</small>
-                                            @else
-                                                <a href="{{ route('works.create', $inscription->event) }}" class="text-slate-800 bg-slate-200 hover:bg-slate-300 font-medium rounded-lg text-sm px-5 py-2.5" style="display: inline-block; text-decoration: none;">
-                                                    Submeter Trabalho
-                                                </a>
-                                            @endif
-                                        </div>
-                                    @endif
-                                    
-                                T</div>
+                                </div>
                             </div>
+                        
                         @empty
-                            <div class="alert alert-info">
+                            <div class="alert alert-info text-slate-600">
                                 Você ainda não possui inscrições.
                             </div>
                         @endforelse
+
                     </div>
                 </div>
             @endif
+            <!-- ===== FIM DO PAINEL DO PARTICIPANTE ===== -->
             
-            <!-- ===== SEÇÃO DO ORGANIZADOR (ID == 2) ===== -->
-            @if(Auth::user()->user_type_id == 2)
-                {{-- (Futuramente, adicionar estatísticas do organizador aqui) --}}
-            @endif
-
-
-            <!-- ===== SEÇÃO DO AVALIADOR (ID == 3) ===== -->
+            
+            <!-- ===== PAINEL DO AVALIADOR (ID 3) ===== -->
             @if(Auth::user()->user_type_id == 3)
-                <div class="mt-6 bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <!-- 
+                  👇 MUDANÇA DE ESTILO "PREMIUM" 👇
+                  shadow-sm sm:rounded-lg -> shadow-xl sm:rounded-2xl
+                -->
+                <div class="mt-6 bg-white overflow-hidden shadow-xl sm:rounded-2xl">
                     <div class="p-6 text-slate-900">
                         <h3 class="text-lg font-semibold mb-4">Trabalhos Pendentes para Avaliação</h3>
 
-                        @forelse($pendingReviews ?? [] as $review)
-                            <div class="card mb-3 border border-slate-300 p-4 rounded-lg">
-                                <div class="card-body">
-                                    <h5 class="card-title font-bold text-lg">{{ $review->work->title }}</h5>
-                                    <p class="text-sm">Autor: {{ $review->work->user->name }}</p>
-                                    <p class="text-sm">Tipo: {{ $review->work->workType->type }}</p>
-                                    
-                                    <div class="mt-4">
-                                        <a href="#" {{-- route('reviews.edit', $review) --}} 
-                                           class="text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5">
-                                            Avaliar Trabalho
-                                        </a>
-                                    </div>
+                        @forelse ($pendingReviews ?? [] as $review)
+                            <div class="mb-4 p-4 border rounded-lg border-slate-200">
+                                <h4 class="font-bold text-lg text-slate-800">{{ $review->work->title }}</h4>
+                                <p class="text-sm text-slate-500">Autor: {{ $review->work->user->name }}</p>
+                                <p class="text-sm text-slate-500">Submetido em: {{ $review->work->created_at->format('d/m/Y') }}</p>
+                                
+                                <div class="mt-4">
+                                    <a href="{{ route('reviews.edit', $review) }}" class="inline-block px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md shadow-sm hover:bg-blue-700">
+                                        Avaliar Trabalho
+                                    </a>
                                 </div>
                             </div>
                         @empty
-                            <div class="alert alert-info">
-                                Você não possui trabalhos pendentes para avaliação.
-                            </div>
+                            <p class="text-slate-600">Você não possui trabalhos pendentes para avaliação no momento.</p>
                         @endforelse
                     </div>
                 </div>
             @endif
+            <!-- ===== FIM DO PAINEL DO AVALIADOR ===== -->
 
         </div>
     </div>

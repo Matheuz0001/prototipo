@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany; // TEM DE IMPORTAR ISTO
+use Illuminate\Database\Eloquent\Relations\HasMany; // Importe o HasMany
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -13,7 +13,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
+     * Os atributos que podem ser preenchidos em massa.
      */
     protected $fillable = [
         'name',
@@ -23,7 +23,7 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * Os atributos que devem estar ocultos.
      */
     protected $hidden = [
         'password',
@@ -31,7 +31,7 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * Os atributos que devem ser convertidos (casts).
      */
     protected function casts(): array
     {
@@ -43,10 +43,27 @@ class User extends Authenticatable implements MustVerifyEmail
 
     /**
      * Um utilizador (participante) pode ter muitas inscrições.
-     * (ESTA É A FUNÇÃO QUE CORRIGE O ERRO DA SUA IMAGEM)
      */
     public function inscriptions(): HasMany
     {
         return $this->hasMany(Inscription::class);
+    }
+
+    /**
+     * As avaliações que este utilizador (Avaliador) fez.
+     */
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    /**
+     * 👇👇 FUNÇÃO QUE FALTAVA 👇👇
+     * Os eventos que este utilizador (Organizador) criou.
+     */
+    public function events(): HasMany
+    {
+        // Um User (Organizador) tem muitos (hasMany) Events
+        return $this->hasMany(Event::class);
     }
 }
