@@ -25,7 +25,7 @@
                     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
                         <div class="p-8 bg-[#0a0a0a] rounded-2xl border border-white/5 shadow-2xl relative overflow-hidden group">
                             <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-indigo-500/10 rounded-full blur-2xl group-hover:bg-indigo-500/20 transition-all"></div>
-                            <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-2">Total Inscritos</span>
+                            <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-2">Inscrições</span>
                             <span class="text-5xl font-black text-white leading-none tracking-tighter">{{ $stats['total_inscriptions'] ?? 0 }}</span>
                         </div>
                         <div class="p-8 bg-[#0a0a0a] rounded-2xl border border-white/5 shadow-2xl relative overflow-hidden group">
@@ -40,7 +40,7 @@
                         </div>
                         <div class="p-8 bg-[#0a0a0a] rounded-2xl shadow-2xl relative overflow-hidden group border border-indigo-500/20">
                             <div class="absolute inset-0 bg-gradient-to-br from-indigo-600/10 to-transparent"></div>
-                            <span class="text-[10px] font-black text-indigo-300 uppercase tracking-widest block mb-2 relative z-10">Presenças</span>
+                            <span class="text-[10px] font-black text-indigo-300 uppercase tracking-widest block mb-2 relative z-10">Credenciamento</span>
                             <span class="text-5xl font-black text-white leading-none tracking-tighter relative z-10">{{ $stats['confirmed_presences'] ?? 0 }}</span>
                         </div>
                     </div>
@@ -202,12 +202,12 @@
                     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
                         <div class="p-8 bg-[#0a0a0a] rounded-2xl border border-white/5 shadow-2xl relative overflow-hidden group">
                             <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-indigo-500/10 rounded-full blur-2xl group-hover:bg-indigo-500/20 transition-all"></div>
-                            <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-2">Total Inscritos</span>
+                            <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-2">INSCRIÇÕES</span>
                             <span class="text-5xl font-black text-white leading-none tracking-tighter">{{ $stats['total_inscriptions'] ?? 0 }}</span>
                         </div>
                         <div class="p-8 bg-[#0a0a0a] rounded-2xl border border-white/5 shadow-2xl relative overflow-hidden group">
                             <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-emerald-500/10 rounded-full blur-2xl group-hover:bg-emerald-500/20 transition-all"></div>
-                            <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-2">Inscrições Pagas</span>
+                            <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-2">INSCRIÇÕES PAGAS</span>
                             <span class="text-5xl font-black text-emerald-400 leading-none tracking-tighter">{{ $stats['confirmed_payments'] ?? 0 }}</span>
                         </div>
                         <div class="p-8 bg-[#0a0a0a] rounded-2xl border border-white/5 shadow-2xl relative overflow-hidden group">

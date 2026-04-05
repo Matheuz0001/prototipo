@@ -5,7 +5,7 @@
             <div class="mb-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
                 <div>
                     <h3 class="text-3xl font-black text-white uppercase tracking-tight italic pe-4 pr-3">
-                        GESTÃO DE <span class="inline-block pr-2 text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-600">INSCRITOS</span>
+                        GESTÃO DE <span class="inline-block pr-2 text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-600">INSCRIÇÕES</span>
                     </h3>
                     <p class="text-slate-500 font-bold text-xs uppercase tracking-widest mt-2">Evento: {{ $event->title }}</p>
                 </div>

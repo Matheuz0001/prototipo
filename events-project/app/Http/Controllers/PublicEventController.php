@@ -7,9 +7,15 @@ use Illuminate\Http\Request;
 
 class PublicEventController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $events = Event::where('registration_deadline', '>=', now())
+                        ->when($request->search, function ($query, $search) {
+                            $query->where(function($q) use ($search) {
+                                $q->where('title', 'like', "%{$search}%")
+                                  ->orWhere('location', 'like', "%{$search}%");
+                            });
+                        })
                         ->orderBy('event_date', 'asc')
                         ->get();
         return view('welcome', compact('events'));

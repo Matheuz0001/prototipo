@@ -7,11 +7,9 @@
 
     <div class="py-12 bg-[#121214] min-h-screen">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-            <!-- Card Principal Dark -->
             <div class="bg-[#0a0a0a] overflow-hidden shadow-2xl rounded-2xl border border-white/5">
                 <div class="p-6 md:p-10 text-white">
 
-                    <!-- Detalhes do Trabalho -->
                     <div class="border-b border-white/5 pb-8">
                         <div class="mb-6">
                             <span class="px-3 py-1 bg-indigo-500/10 text-indigo-400 rounded-2xl text-[10px] font-black uppercase tracking-widest mb-3 inline-block border border-indigo-500/20">
@@ -23,7 +21,7 @@
                         
                         <div class="mt-8 bg-white/5 p-6 rounded-2xl border border-white/5 shadow-inner">
                             <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3">Resumo (Abstract)</h4>
-                            <p class="text-slate-300 text-sm leading-relaxed whitespace-pre-line italic">"{{ $review->work->abstract }}"</p>
+                            <p class="text-slate-300 text-sm leading-relaxed whitespace-pre-wrap break-words italic">"{{ $review->work->abstract }}"</p>
                         </div>
 
                         <div class="mt-8 flex justify-center sm:justify-start">
@@ -34,12 +32,10 @@
                         </div>
                     </div>
 
-                    <!-- Formulário de Avaliação -->
                     <form method="POST" action="{{ route('reviews.update', $review) }}" class="mt-10 space-y-8">
                         @csrf
-                        @method('PATCH')
+                        @method('PUT')
 
-                        <!-- Status (Aprovado/Reprovado) -->
                         <div>
                             <label for="status" class="text-[10px] font-black text-indigo-500 uppercase tracking-[0.2em] mb-3 block ms-4">Parecer da Avaliação</label>
                             <select id="status" name="status" class="block w-full bg-[#121214] border-white/10 focus:border-indigo-500 focus:ring-indigo-500 rounded-2xl shadow-sm text-white text-xs font-bold uppercase tracking-wider py-4 px-6" required>
@@ -50,7 +46,6 @@
                             <x-input-error :messages="$errors->get('status')" class="mt-2 text-[10px] font-bold text-red-500 uppercase" />
                         </div>
 
-                        <!-- Comentários -->
                         <div>
                             <label for="comments" class="text-[10px] font-black text-indigo-500 uppercase tracking-[0.2em] mb-3 block ms-4">Comentários (Justificativa para o autor)</label>
                             <textarea id="comments" name="comments" rows="6" class="block w-full bg-[#121214] border-white/10 focus:border-indigo-500 focus:ring-indigo-500 rounded-2xl shadow-sm text-white text-sm py-4 px-6 placeholder:text-slate-600 shadow-inner" placeholder="Descreva os pontos positivos e melhorias necessárias..." required>{{ old('comments') }}</textarea>

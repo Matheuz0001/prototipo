@@ -13,7 +13,6 @@
                 <form method="POST" action="{{ route('inscriptions.store', $event->id) }}" class="space-y-8">
                     @csrf
 
-                    <!-- Passo 1: Modalidade -->
                     <div>
                         <label for="inscription_type_id" class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-4 block border-b border-white/5 pb-2">1. Selecione sua Modalidade</label>
                         
@@ -25,20 +24,28 @@
                             <div class="grid grid-cols-1 gap-4">
                                 @foreach ($inscriptionTypes as $type)
                                     <label class="relative flex items-center p-6 bg-[#121214] border border-white/5 rounded-2xl cursor-pointer hover:border-indigo-500/30 transition-all group">
-                                        <input type="radio" name="inscription_type_id" value="{{ $type->id }}" class="sr-only peer" required>
-                                        <div class="w-5 h-5 border-2 border-white/10 rounded-full flex items-center justify-center peer-checked:border-indigo-500 transition-all">
-                                            <div class="w-2.5 h-2.5 bg-indigo-500 rounded-full opacity-0 peer-checked:opacity-100 transition-all"></div>
+                                        
+                                        <input type="radio" name="inscription_type_id" value="{{ $type->id }}" 
+                                            class="peer/modalidade sr-only" 
+                                            required {{ old('inscription_type_id') == $type->id ? 'checked' : '' }}>
+                                        
+                                        <div class="w-5 h-5 border-2 border-purple-600 rounded-full flex items-center justify-center peer-checked/modalidade:bg-purple-600 transition-all z-10 relative">
+                                            <div class="w-2.5 h-2.5 bg-white rounded-full opacity-0 peer-checked/modalidade:opacity-100 transition-all"></div>
                                         </div>
-                                        <div class="ms-6 flex-1">
+
+                                        <div class="ms-6 flex-1 relative z-10 pointer-events-none">
                                             <div class="flex justify-between items-center">
-                                                <span class="text-sm font-black text-white uppercase tracking-widest group-hover:text-indigo-400 transition-colors">{{ $type->type }}</span>
+                                                <span class="text-sm font-black text-white uppercase tracking-widest group-hover:text-indigo-400 transition-colors">
+                                                    {{ $type->type }}
+                                                </span>
                                                 <span class="text-lg font-black text-white italic">R$ {{ number_format($type->price, 2, ',', '.') }}</span>
                                             </div>
                                             @if($type->allow_work_submission)
                                                 <span class="mt-1 inline-block text-[8px] font-black text-indigo-500 uppercase tracking-tighter bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">Permite submissão de trabalho acadêmico</span>
                                             @endif
                                         </div>
-                                        <div class="absolute inset-0 border-2 border-transparent peer-checked:border-indigo-500/50 rounded-2xl pointer-events-none transition-all"></div>
+
+                                        <div class="absolute inset-0 border-2 border-transparent peer-checked/modalidade:border-indigo-500/50 rounded-2xl pointer-events-none transition-all z-0"></div>
                                     </label>
                                 @endforeach
                             </div>
@@ -46,7 +53,6 @@
                         <x-input-error :messages="$errors->get('inscription_type_id')" class="mt-2 text-[10px] font-bold text-red-500 uppercase" />
                     </div>
 
-                    <!-- Passo 2: Atividades -->
                     <div class="pt-4">
                         <label class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-4 block border-b border-white/5 pb-2">2. Escolha suas Atividades (Opcional)</label>
                         <p class="text-[10px] text-slate-600 font-bold uppercase tracking-widest mb-6">Atividades sem limite de vagas já estão inclusas automaticamente.</p>
@@ -81,10 +87,10 @@
                                         @endphp
                                         <label class="relative flex items-center p-5 bg-[#121214] border border-white/5 rounded-2xl transition-all {{ $isFull ? 'opacity-40 grayscale cursor-not-allowed' : 'cursor-pointer hover:border-purple-500/30 group' }}">
                                             <input type="checkbox" name="activities[]" value="{{ $act->id }}" class="sr-only peer" {{ $isFull ? 'disabled' : '' }}>
-                                            <div class="w-5 h-5 border-2 border-white/10 rounded-lg flex items-center justify-center peer-checked:border-purple-500 peer-checked:bg-purple-500 transition-all">
+                                            <div class="w-5 h-5 border-2 border-white/10 rounded-lg flex items-center justify-center peer-checked:border-purple-500 peer-checked:bg-purple-500 transition-all z-10 relative">
                                                 <svg class="w-3 h-3 text-white opacity-0 peer-checked:opacity-100 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg>
                                             </div>
-                                            <div class="ms-5 flex-1">
+                                            <div class="ms-5 flex-1 z-10 relative pointer-events-none">
                                                 <div class="flex justify-between items-center">
                                                     <span class="text-xs font-black text-white uppercase tracking-widest group-hover:text-purple-400 transition-colors">{{ $act->title }}</span>
                                                     <span class="text-[9px] font-black uppercase px-3 py-1 rounded-full border {{ $isFull ? 'bg-red-500/10 text-red-500 border-red-500/20' : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' }}">
@@ -93,7 +99,7 @@
                                                 </div>
                                                 <p class="text-[10px] text-slate-500 font-bold uppercase tracking-tighter mt-1">{{ \Carbon\Carbon::parse($act->start_time)->format('d/m \à\s H:i') }}h — {{ $act->location }}</p>
                                             </div>
-                                            <div class="absolute inset-0 border-2 border-transparent peer-checked:border-purple-500/50 rounded-2xl pointer-events-none transition-all"></div>
+                                            <div class="absolute inset-0 border-2 border-transparent peer-checked:border-purple-500/50 rounded-2xl pointer-events-none transition-all z-0"></div>
                                         </label>
                                     @endforeach
                                 </div>

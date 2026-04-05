@@ -22,7 +22,7 @@
                                 <tr>
                                     <th class="px-6 py-4 text-left text-[10px] font-black text-slate-500 uppercase tracking-widest">Evento</th>
                                     <th class="px-6 py-4 text-left text-[10px] font-black text-slate-500 uppercase tracking-widest">Data / Local</th>
-                                    <th class="px-6 py-4 text-left text-[10px] font-black text-slate-500 uppercase tracking-widest">Inscritos</th>
+                                    <th class="px-6 py-4 text-left text-[10px] font-black text-slate-500 uppercase tracking-widest">INSCRIÇÕES</th>
                                     <th class="px-6 py-4 text-center text-[10px] font-black text-slate-500 uppercase tracking-widest">Ações</th>
                                 </tr>
                             </thead>

@@ -75,18 +75,79 @@
 
                         <!-- Sessão: Financeiro -->
                         <div class="space-y-6 pt-4">
-                            <h4 class="text-[10px] font-black text-emerald-500 uppercase tracking-[0.2em] border-b border-white/5 pb-2">Financeiro e Pagamento</h4>
+                            <h4 class="text-[10px] font-black text-emerald-500 uppercase tracking-[0.2em] border-b border-white/5 pb-2">Pagamento</h4>
                             
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <x-input-label for="registration_fee" :value="__('Taxa de Inscrição Base (R$)')" class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 ms-4" />
-                                    <x-text-input id="registration_fee" class="block mt-1 w-full bg-[#121214] border-white/10 focus:border-indigo-500 focus:ring-indigo-500 rounded-2xl shadow-sm text-[#f0eee9]" type="number" name="registration_fee" :value="old('registration_fee', 0)" step="0.01" min="0" required />
-                                    <x-input-error :messages="$errors->get('registration_fee')" class="mt-2 text-xs font-bold text-red-500" />
+                            <div>
+                                <x-input-label for="pix_key" :value="__('Chave Pix (Recebimento)')" class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 ms-4" />
+                                <x-text-input id="pix_key" class="block mt-1 w-full bg-[#121214] border-white/10 focus:border-indigo-500 focus:ring-indigo-500 rounded-2xl shadow-sm text-[#f0eee9]" type="text" name="pix_key" :value="old('pix_key')" required placeholder="E-mail, CPF, CNPJ ou Aleatória" />
+                                <x-input-error :messages="$errors->get('pix_key')" class="mt-2 text-xs font-bold text-red-500" />
+                            </div>
+                        </div>
+
+                        <!-- Sessão: Tipos de Inscrição Dinâmicos -->
+                        <div class="space-y-6 pt-4">
+                            <div class="flex items-center justify-between border-b border-white/5 pb-2">
+                                <h4 class="text-[10px] font-black text-indigo-500 uppercase tracking-[0.2em]">Tipos de Inscrição</h4>
+                                <button type="button" onclick="addInscriptionRow()" class="text-[9px] font-black text-indigo-400 uppercase tracking-widest hover:text-white transition-colors">
+                                    + Adicionar Modalidade
+                                </button>
+                            </div>
+                            
+                            <div id="inscriptions-container" class="space-y-4">
+                                <div class="inscription-row grid grid-cols-1 md:grid-cols-3 gap-4 p-4 bg-white/5 rounded-2xl border border-white/5">
+                                    <div>
+                                        <x-input-label :value="__('Tipo/Nome')" class="text-[9px] font-black uppercase tracking-widest text-slate-500 mb-1 ms-2" />
+                                        <input type="text" name="inscriptions[0][type]" class="block w-full bg-[#121214] border-white/10 focus:border-indigo-500 focus:ring-indigo-500 rounded-xl text-xs text-white" placeholder="Ex: Estudante, Profissional">
+                                    </div>
+                                    <div>
+                                        <x-input-label :value="__('Preço (R$)')" class="text-[9px] font-black uppercase tracking-widest text-slate-500 mb-1 ms-2" />
+                                        <input type="number" name="inscriptions[0][price]" step="0.01" class="block w-full bg-[#121214] border-white/10 focus:border-indigo-500 focus:ring-indigo-500 rounded-xl text-xs text-white" placeholder="0.00">
+                                    </div>
+                                    <div class="flex items-center mt-4">
+                                        <label class="flex items-center cursor-pointer">
+                                            <input type="checkbox" name="inscriptions[0][allow_work_submission]" class="rounded bg-[#121214] border-white/10 text-indigo-600 focus:ring-indigo-500">
+                                            <span class="ms-2 text-[9px] font-black uppercase tracking-widest text-slate-400">Permitir Trabalho</span>
+                                        </label>
+                                    </div>
                                 </div>
-                                <div>
-                                    <x-input-label for="pix_key" :value="__('Chave Pix (Recebimento)')" class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 ms-4" />
-                                    <x-text-input id="pix_key" class="block mt-1 w-full bg-[#121214] border-white/10 focus:border-indigo-500 focus:ring-indigo-500 rounded-2xl shadow-sm text-[#f0eee9]" type="text" name="pix_key" :value="old('pix_key')" required placeholder="E-mail, CPF, CNPJ ou Aleatória" />
-                                    <x-input-error :messages="$errors->get('pix_key')" class="mt-2 text-xs font-bold text-red-500" />
+                            </div>
+                        </div>
+
+                        <!-- Sessão: Grade de Atividades Dinâmicas -->
+                        <div class="space-y-6 pt-4">
+                            <div class="flex items-center justify-between border-b border-white/5 pb-2">
+                                <h4 class="text-[10px] font-black text-purple-500 uppercase tracking-[0.2em]">Grade de Atividades</h4>
+                                <button type="button" onclick="addActivityRow()" class="text-[9px] font-black text-purple-400 uppercase tracking-widest hover:text-white transition-colors">
+                                    + Adicionar Atividade
+                                </button>
+                            </div>
+                            
+                            <div id="activities-container" class="space-y-4">
+                                <div class="activity-row p-6 bg-white/5 rounded-2xl border border-white/5 space-y-4">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <x-input-label :value="__('Título da Atividade')" class="text-[9px] font-black uppercase tracking-widest text-slate-500 mb-1 ms-2" />
+                                            <input type="text" name="activities[0][title]" class="block w-full bg-[#121214] border-white/10 focus:border-indigo-500 focus:ring-indigo-500 rounded-xl text-xs text-white" placeholder="Ex: Palestra Magna">
+                                        </div>
+                                        <div>
+                                            <x-input-label :value="__('Local/Link')" class="text-[9px] font-black uppercase tracking-widest text-slate-500 mb-1 ms-2" />
+                                            <input type="text" name="activities[0][location]" class="block w-full bg-[#121214] border-white/10 focus:border-indigo-500 focus:ring-indigo-500 rounded-xl text-xs text-white" placeholder="Auditório A">
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <div>
+                                            <x-input-label :value="__('Data')" class="text-[9px] font-black uppercase tracking-widest text-slate-500 mb-1 ms-2" />
+                                            <input type="date" name="activities[0][date]" class="block w-full bg-[#121214] border-white/10 focus:border-indigo-500 focus:ring-indigo-500 rounded-xl text-xs text-white">
+                                        </div>
+                                        <div>
+                                            <x-input-label :value="__('Início')" class="text-[9px] font-black uppercase tracking-widest text-slate-500 mb-1 ms-2" />
+                                            <input type="time" name="activities[0][start_time]" class="block w-full bg-[#121214] border-white/10 focus:border-indigo-500 focus:ring-indigo-500 rounded-xl text-xs text-white">
+                                        </div>
+                                        <div>
+                                            <x-input-label :value="__('Vagas')" class="text-[9px] font-black uppercase tracking-widest text-slate-500 mb-1 ms-2" />
+                                            <input type="number" name="activities[0][max_participants]" class="block w-full bg-[#121214] border-white/10 focus:border-indigo-500 focus:ring-indigo-500 rounded-xl text-xs text-white" placeholder="Ilimitado">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -96,7 +157,7 @@
                                 Cancelar
                             </a>
                             <button type="submit" class="px-10 py-4 bg-gradient-to-r from-[#4f46e5] to-[#9333ea] text-white font-black rounded-2xl shadow-2xl hover:scale-105 transition-all uppercase tracking-widest text-[10px]">
-                                Criar Evento
+                                Criar Evento Completo
                             </button>
                         </div>
                     </form>
@@ -104,4 +165,36 @@
             </div>
         </div>
     </div>
+
+    <script>
+        let inscriptionIndex = 1;
+        let activityIndex = 1;
+
+        function addInscriptionRow() {
+            const container = document.getElementById('inscriptions-container');
+            const newRow = container.querySelector('.inscription-row').cloneNode(true);
+            
+            newRow.querySelectorAll('input').forEach(input => {
+                input.name = input.name.replace('[0]', `[${inscriptionIndex}]`);
+                if (input.type === 'checkbox') input.checked = false;
+                else input.value = '';
+            });
+            
+            container.appendChild(newRow);
+            inscriptionIndex++;
+        }
+
+        function addActivityRow() {
+            const container = document.getElementById('activities-container');
+            const newRow = container.querySelector('.activity-row').cloneNode(true);
+            
+            newRow.querySelectorAll('input').forEach(input => {
+                input.name = input.name.replace('[0]', `[${activityIndex}]`);
+                input.value = '';
+            });
+            
+            container.appendChild(newRow);
+            activityIndex++;
+        }
+    </script>
 </x-app-layout>

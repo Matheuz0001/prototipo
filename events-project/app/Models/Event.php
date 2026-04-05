@@ -20,7 +20,6 @@ class Event extends Model
         'location',
         'event_date',
         'registration_deadline',
-        'registration_fee',
         'max_participants',
         'pix_key',
         'cover_image_path', // 👈 ADICIONADO

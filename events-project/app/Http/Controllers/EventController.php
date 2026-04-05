@@ -59,25 +59,52 @@ class EventController extends Controller
             'location' => 'required|string|max:255',
             'event_date' => 'required|date',
             'registration_deadline' => 'required|date|after_or_equal:now',
-            'registration_fee' => 'required|numeric|min:0',
             'max_participants' => 'nullable|integer|min:1',
             'pix_key' => 'required|string|max:255',
-            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048', // 👈 ADICIONADO
+            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
         // Adiciona o ID do Organizador
         $validatedData['user_id'] = Auth::id();
 
-        // 👈 LÓGICA DE UPLOAD ADICIONADA 👇
         if ($request->hasFile('cover_image')) {
             $path = $request->file('cover_image')->store('event-covers', 'public');
             $validatedData['cover_image_path'] = $path;
         }
 
         // Cria o Evento
-        Event::create($validatedData);
+        $event = Event::create($validatedData);
 
-        return redirect()->route('events.index')->with('success', 'Evento criado com sucesso!');
+        // Salva os Tipos de Inscrição
+        if ($request->has('inscriptions')) {
+            foreach ($request->inscriptions as $ins) {
+                if (!empty($ins['type'])) {
+                    $event->inscriptionTypes()->create([
+                        'type' => $ins['type'],
+                        'price' => $ins['price'] ?? 0,
+                        'allow_work_submission' => isset($ins['allow_work_submission']) ? 1 : 0,
+                    ]);
+                }
+            }
+        }
+
+        // Salva a Grade de Atividades
+        if ($request->has('activities')) {
+            foreach ($request->activities as $act) {
+                if (!empty($act['title'])) {
+                    $event->activities()->create([
+                        'title' => $act['title'],
+                        'start_time' => $act['date'] . ' ' . ($act['start_time'] ?? '00:00'),
+                        'end_time' => $act['date'] . ' ' . ($act['end_time'] ?? '00:00'),
+                        'location' => $act['location'] ?? $event->location,
+                        'description' => $act['description'] ?? null,
+                        'max_participants' => $act['max_participants'] ?? null,
+                    ]);
+                }
+            }
+        }
+
+        return redirect()->route('events.index')->with('success', 'Evento completo criado com sucesso!');
     }
 
     /**
@@ -106,10 +133,9 @@ class EventController extends Controller
             'location' => 'required|string|max:255',
             'event_date' => 'required|date',
             'registration_deadline' => 'required|date',
-            'registration_fee' => 'required|numeric|min:0',
             'max_participants' => 'nullable|integer|min:1',
             'pix_key' => 'required|string|max:255',
-            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048', // 👈 ADICIONADO
+            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
         // 👈 LÓGICA DE UPLOAD/ATUALIZAÇÃO ADICIONADA 👇

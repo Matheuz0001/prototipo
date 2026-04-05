@@ -79,19 +79,12 @@
 
                         <!-- Sessão: Financeiro -->
                         <div class="space-y-6 pt-4">
-                            <h4 class="text-[10px] font-black text-emerald-500 uppercase tracking-[0.2em] border-b border-white/5 pb-2">Financeiro e Pagamento</h4>
+                            <h4 class="text-[10px] font-black text-emerald-500 uppercase tracking-[0.2em] border-b border-white/5 pb-2">Pagamento</h4>
                             
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <x-input-label for="registration_fee" :value="__('Taxa de Inscrição Base (R$)')" class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 ms-4" />
-                                    <x-text-input id="registration_fee" class="block mt-1 w-full bg-[#121214] border-white/10 focus:border-indigo-500 focus:ring-indigo-500 rounded-2xl shadow-sm text-[#f0eee9]" type="number" name="registration_fee" :value="old('registration_fee', $event->registration_fee)" step="0.01" min="0" required />
-                                    <x-input-error :messages="$errors->get('registration_fee')" class="mt-2 text-xs font-bold text-red-500" />
-                                </div>
-                                <div>
-                                    <x-input-label for="pix_key" :value="__('Chave Pix (Recebimento)')" class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 ms-4" />
-                                    <x-text-input id="pix_key" class="block mt-1 w-full bg-[#121214] border-white/10 focus:border-indigo-500 focus:ring-indigo-500 rounded-2xl shadow-sm text-[#f0eee9]" type="text" name="pix_key" :value="old('pix_key', $event->pix_key)" required />
-                                    <x-input-error :messages="$errors->get('pix_key')" class="mt-2 text-xs font-bold text-red-500" />
-                                </div>
+                            <div>
+                                <x-input-label for="pix_key" :value="__('Chave Pix (Recebimento)')" class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 ms-4" />
+                                <x-text-input id="pix_key" class="block mt-1 w-full bg-[#121214] border-white/10 focus:border-indigo-500 focus:ring-indigo-500 rounded-2xl shadow-sm text-[#f0eee9]" type="text" name="pix_key" :value="old('pix_key', $event->pix_key)" required />
+                                <x-input-error :messages="$errors->get('pix_key')" class="mt-2 text-xs font-bold text-red-500" />
                             </div>
                         </div>
 

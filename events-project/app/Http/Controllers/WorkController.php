@@ -57,8 +57,8 @@ class WorkController extends Controller
         // 1. Validar os dados do formulário
         $request->validate([
             'title' => 'required|string|max:255',
-            'work_type_id' => 'required|exists:work_types,id',
-            'advisor' => 'required|string|max:255',
+            'work_type' => 'required|string|max:255',
+            'advisor' => 'nullable|string|max:255',
             'co_authors_text' => 'nullable|string|max:255',
             'abstract' => 'required|string|min:100', // Resumo
             'file' => 'required|file|mimes:pdf,doc,docx|max:5120', // 5MB Max
@@ -96,7 +96,7 @@ class WorkController extends Controller
             // 4a. Criar o registo do Trabalho
             $work = Work::create([
                 'user_id' => $user->id,
-                'work_type_id' => $request->work_type_id,
+                'work_type' => $request->work_type,
                 'title' => $request->title,
                 'abstract' => $request->abstract,
                 'advisor' => $request->advisor,

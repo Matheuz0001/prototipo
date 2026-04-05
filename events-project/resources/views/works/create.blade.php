@@ -24,25 +24,19 @@
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Tipo de Trabalho (Dropdown) -->
+                        <!-- Tipo de Trabalho -->
                         <div>
-                            <label for="work_type_id" class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 block">Tipo de Trabalho</label>
-                            <select id="work_type_id" name="work_type_id" required
-                                class="w-full bg-[#121214] border border-white/10 rounded-xl text-white px-4 py-3 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all shadow-inner">
-                                <option value="" disabled selected>Selecione a modalidade...</option>
-                                @foreach($workTypes as $type)
-                                    <option value="{{ $type->id }}" {{ old('work_type_id') == $type->id ? 'selected' : '' }}>
-                                        {{ $type->type }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <x-input-error :messages="$errors->get('work_type_id')" class="mt-2 text-[10px] font-bold text-red-500 uppercase" />
+                            <label for="work_type" class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 block">Tipo de Trabalho</label>
+                            <input id="work_type" type="text" name="work_type" value="{{ old('work_type') }}" required
+                                class="w-full bg-[#121214] border border-white/10 rounded-xl text-white px-4 py-3 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all shadow-inner"
+                                placeholder="Ex: Resumo Simples, Artigo Completo...">
+                            <x-input-error :messages="$errors->get('work_type')" class="mt-2 text-[10px] font-bold text-red-500 uppercase" />
                         </div>
 
                         <!-- Orientador -->
                         <div>
-                            <label for="advisor" class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 block">Nome do Orientador</label>
-                            <input id="advisor" type="text" name="advisor" value="{{ old('advisor') }}" required
+                            <label for="advisor" class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 block">Nome do Orientador (Opcional)</label>
+                            <input id="advisor" type="text" name="advisor" value="{{ old('advisor') }}"
                                 class="w-full bg-[#121214] border border-white/10 rounded-xl text-white px-4 py-3 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all placeholder-slate-600 shadow-inner"
                                 placeholder="Nome completo do docente">
                             <x-input-error :messages="$errors->get('advisor')" class="mt-2 text-[10px] font-bold text-red-500 uppercase" />
@@ -58,9 +52,9 @@
                         <x-input-error :messages="$errors->get('co_authors_text')" class="mt-2 text-[10px] font-bold text-red-500 uppercase" />
                     </div>
                     
-                    <!-- Resumo (Abstract) -->
+                    <!-- Resumo -->
                     <div>
-                        <label for="abstract" class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 block">Resumo (Abstract)</label>
+                        <label for="abstract" class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 block">Resumo</label>
                         <textarea id="abstract" name="abstract" rows="6" required
                             class="w-full bg-[#121214] border border-white/10 rounded-xl text-white px-4 py-3 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all placeholder-slate-600 shadow-inner"
                             placeholder="Descreva brevemente os objetivos, metodologia e resultados do trabalho...">{{ old('abstract') }}</textarea>

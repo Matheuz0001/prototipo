@@ -28,7 +28,7 @@
                 <x-text-input id="password" type="password" name="password" required autocomplete="new-password" placeholder="••••••••" />
             </div>
             <div>
-                <x-input-label for="password_confirmation" :value="__('Confirmar')" class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 ms-4" />
+                <x-input-label for="password_confirmation" :value="__('Confirmar Senha')" class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 ms-4" />
                 <x-text-input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password" placeholder="••••••••" />
             </div>
         </div>

@@ -15,6 +15,7 @@ class Work extends Model
     protected $fillable = [
         'user_id',
         'work_type_id',
+        'work_type',
         'title',
         'abstract',
         'advisor',
