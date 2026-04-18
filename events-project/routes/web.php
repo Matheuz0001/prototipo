@@ -16,6 +16,9 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CertificateController;
+use App\Http\Controllers\Staff\StaffAuthController;
+use App\Http\Controllers\Staff\StaffCheckinController;
+use App\Http\Controllers\Staff\StaffDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +29,13 @@ use App\Http\Controllers\CertificateController;
 // --- ROTAS PÚBLICAS ---
 Route::get('/', [PublicEventController::class, 'index'])->name('home');
 Route::get('/eventos/{event}', [PublicEventController::class, 'show'])->name('events.public.show');
+Route::get('/staff/login/{token}', [StaffAuthController::class, 'login'])->name('staff.magic_login');
+
+// --- ROTAS DO STAFF (Auth sem verificação de email — entrada via Magic Link) ---
+Route::middleware(['auth', 'staff_context'])->prefix('staff/events/{event}')->name('staff.')->group(function () {
+    Route::get('/dashboard', [StaffDashboardController::class, 'show'])->name('dashboard');
+    Route::post('/checkin', [StaffCheckinController::class, 'store'])->name('checkin');
+});
 
 // --- ROTAS PROTEGIDAS (AUTH) ---
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -37,6 +47,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware(['organizer'])->group(function () {
         Route::resource('events', EventController::class);
         Route::get('/events/{event}/export', [ReportController::class, 'exportInscriptions'])->name('events.export');
+        Route::post('/events/{event}/staff/generate', [StaffAuthController::class, 'generate'])->name('staff.generate');
         
         // Atividades
         Route::get('/events/{event}/activities/create', [ActivityController::class, 'create'])->name('activities.create');
@@ -117,6 +128,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         
         return view('attendance.qrcode', compact('inscription', 'qrCodeUri'));
     })->name('ingresso.force.show');
+
+    // Staff routes moved to public group (above) — auth via Magic Link, no email verification needed.
 
     // --- GRUPO DO AVALIADOR ---
     Route::get('/avaliacoes/{review}/avaliar', [ReviewController::class, 'edit'])->name('reviews.edit');

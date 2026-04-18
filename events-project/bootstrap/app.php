@@ -17,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'organizer' => \App\Http\Middleware\CheckIsOrganizer::class,
             'admin' => \App\Http\Middleware\CheckIsAdmin::class,
+            'staff_context' => \App\Http\Middleware\EnsureStaffEventContext::class,
         ]);
 
     })

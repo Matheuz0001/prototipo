@@ -194,7 +194,87 @@
                         @endforelse
                     </div>
                 </div>
+
+                {{-- Seção 4: Equipe / Staff --}}
+                <div class="bg-[#0a0a0a] border border-white/5 rounded-2xl p-8 sm:p-12 shadow-2xl">
+                    <div class="flex items-center justify-between mb-8 border-b border-white/5 pb-4">
+                        <div>
+                            <h4 class="text-xl font-black text-white uppercase italic">Módulo <span class="text-emerald-500">Staff</span></h4>
+                            <p class="text-[10px] text-slate-500 font-black uppercase tracking-widest mt-1">Gere links de acesso temporários para operarem validadores de porta.</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <form id="generateStaffForm" class="flex flex-col sm:flex-row gap-4 items-end">
+                            <div class="flex-grow w-full">
+                                <x-input-label for="staff_email" :value="__('E-mail do Colaborador')" class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 ms-4" />
+                                <x-text-input id="staff_email" class="block w-full bg-[#121214] border-white/10 focus:border-emerald-500 focus:ring-emerald-500 rounded-2xl shadow-sm text-[#f0eee9]" type="email" placeholder="nome@exemplo.com" required />
+                            </div>
+                            <button type="submit" id="generateStaffBtn" class="px-8 py-3 h-[42px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-emerald-500 hover:text-white transition-all whitespace-nowrap">
+                                + Gerar Magic Link
+                            </button>
+                        </form>
+
+                        <div id="staffLinkContainer" class="hidden mt-6 p-6 bg-emerald-900/20 border border-emerald-500/30 rounded-2xl">
+                            <p class="text-[10px] font-black text-emerald-400 uppercase tracking-widest mb-2">Link de Acesso Gerado (Válido por 4h)</p>
+                            <div class="flex items-center gap-3">
+                                <input type="text" id="staffMagicLinkInput" readonly class="flex-grow bg-[#0a0a0a] border border-white/10 text-slate-300 text-xs rounded-xl px-4 py-3 font-mono focus:ring-0">
+                                <button type="button" onclick="copyMagicLink()" class="px-4 py-3 bg-white/5 hover:bg-white/10 text-white rounded-xl transition-colors font-bold text-xs uppercase tracking-widest">
+                                    Copiar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
+
+    <script>
+        const generateStaffForm = document.getElementById('generateStaffForm');
+        const staffLinkContainer = document.getElementById('staffLinkContainer');
+        const staffMagicLinkInput = document.getElementById('staffMagicLinkInput');
+        
+        if(generateStaffForm) {
+            generateStaffForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('staff_email').value;
+                const btn = document.getElementById('generateStaffBtn');
+                btn.innerText = 'GERANDO...';
+                
+                try {
+                    const response = await fetch(`{{ route('staff.generate', $event) }}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({ email: email })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if(data.success) {
+                        staffLinkContainer.classList.remove('hidden');
+                        staffMagicLinkInput.value = data.url;
+                        document.getElementById('staff_email').value = '';
+                    } else {
+                        alert(data.message || 'Erro ao gerar o link');
+                    }
+                } catch(error) {
+                    alert('Erro de conexão ao gerar link.');
+                } finally {
+                    btn.innerText = '+ GERAR MAGIC LINK';
+                }
+            });
+        }
+
+        function copyMagicLink() {
+            staffMagicLinkInput.select();
+            document.execCommand('copy');
+            alert('Link mágico copiado para a área de transferência!');
+        }
+    </script>
 </x-app-layout>
