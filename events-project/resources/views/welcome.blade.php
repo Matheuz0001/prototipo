@@ -143,8 +143,9 @@
         </nav>
 
         <section class="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-16 z-10 w-full px-4 sm:px-6 lg:px-8">
+            <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-gradient-to-r from-purple-600/30 to-indigo-600/30 rounded-full blur-[140px] pointer-events-none z-0"></div>
             <!-- Hero Content -->
-            <div class="text-center w-full max-w-4xl mx-auto z-20 mt-16 md:mt-24 mb-16">
+            <div class="text-center w-full max-w-4xl mx-auto z-20 mt-16 md:mt-24 mb-16 relative">
                 <!-- Eyebrow -->
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-black uppercase tracking-widest mb-6">
                     <span class="relative flex h-2 w-2">
@@ -159,17 +160,17 @@
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-500 to-indigo-600">Movendo a ciência.</span>
                 </h1>
                 
-                <p class="text-slate-400 text-base md:text-xl font-medium leading-relaxed max-w-2xl mx-auto mb-10">
+                <p class="text-slate-300 text-lg md:text-2xl font-normal leading-loose tracking-wide max-w-3xl mx-auto mb-10 drop-shadow-md">
                     O PÁTIO é a sua plataforma unificada para descobrir eventos acadêmicos, submeter trabalhos científicos e gerenciar suas participações de forma simples.
                 </p>
                 
                 <!-- CTA Buttons -->
                 <div class="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">
-                    <a href="#carrossel" class="px-8 py-4 bg-gradient-to-r from-[#4f46e5] to-[#9333ea] text-white font-black rounded-2xl uppercase tracking-widest hover:scale-105 hover:shadow-[0_0_30px_rgba(79,70,229,0.5)] transition-all flex items-center justify-center gap-2 group">
+                    <a href="#carrossel" class="px-8 py-4 bg-gradient-to-r from-[#4f46e5] to-[#9333ea] text-white font-black rounded-2xl uppercase tracking-widest hover:scale-105 hover:shadow-[0_0_30px_rgba(79,70,229,0.5)] transition-all duration-500 flex items-center justify-center gap-2 group w-full sm:w-[280px]">
                         Explorar Eventos
-                        <svg class="w-5 h-5 group-hover:translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                        <svg class="w-5 h-5 group-hover:translate-y-1 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
                     </a>
-                    <a href="{{ route('register') }}" class="px-8 py-4 bg-transparent border-2 border-white/10 text-white font-black rounded-2xl uppercase tracking-widest hover:border-white/30 hover:bg-white/5 transition-all flex items-center justify-center">
+                    <a href="{{ route('register') }}" class="px-8 py-4 bg-transparent border-2 border-white/10 text-white font-black rounded-2xl uppercase tracking-widest hover:border-indigo-500 hover:bg-indigo-500/10 hover:shadow-[0_0_20px_rgba(79,70,229,0.4)] hover:scale-105 transition-all duration-500 flex items-center justify-center w-full sm:w-[280px]">
                         Criar Conta
                     </a>
                 </div>
@@ -178,42 +179,35 @@
             <!-- Value Cards Grid -->
             <div class="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 relative z-20">
                 <!-- Card 1 -->
-                <div class="bg-[#16161a]/80 backdrop-blur-md border border-white/5 rounded-2xl p-8 hover:border-indigo-500/30 hover:bg-[#1a1a24] transition-all group shadow-xl">
-                    <div class="w-14 h-14 rounded-full bg-indigo-500/10 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-indigo-500/20 transition-all">
+                <div class="bg-white/[0.02] backdrop-blur-md border border-white/10 rounded-2xl p-8 hover:border-indigo-500/30 hover:bg-white/[0.04] transition-all duration-500 group shadow-2xl">
+                    <div class="w-14 h-14 rounded-full bg-indigo-500/10 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-indigo-500/20 transition-all duration-500">
                         <svg class="w-7 h-7 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                     </div>
                     <h3 class="text-white font-black text-xl uppercase italic mb-3">Descubra</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed font-medium">Encontre simpósios, congressos e palestras na sua área de interesse.</p>
+                    <p class="text-slate-300 text-base leading-relaxed font-normal">Encontre simpósios, congressos e palestras na sua área de interesse.</p>
                 </div>
                 
                 <!-- Card 2 -->
-                <div class="bg-[#16161a]/80 backdrop-blur-md border border-white/5 rounded-2xl p-8 hover:border-purple-500/30 hover:bg-[#1a1a24] transition-all group shadow-xl relative overflow-hidden">
+                <div class="bg-white/[0.02] backdrop-blur-md border border-white/10 rounded-2xl p-8 hover:border-purple-500/30 hover:bg-white/[0.04] transition-all duration-500 group shadow-2xl relative overflow-hidden">
                     <div class="relative">
-                        <div class="w-14 h-14 rounded-full bg-purple-500/10 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-purple-500/20 transition-all">
+                        <div class="w-14 h-14 rounded-full bg-purple-500/10 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-purple-500/20 transition-all duration-500">
                             <svg class="w-7 h-7 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                         </div>
                         <h3 class="text-white font-black text-xl uppercase italic mb-3">Submeta</h3>
-                        <p class="text-slate-400 text-sm leading-relaxed font-medium">Envie seus trabalhos acadêmicos e acompanhe a avaliação em tempo real.</p>
+                        <p class="text-slate-300 text-base leading-relaxed font-normal">Envie seus trabalhos acadêmicos e acompanhe a avaliação em tempo real.</p>
                     </div>
                 </div>
 
                 <!-- Card 3 -->
-                <div class="bg-[#16161a]/80 backdrop-blur-md border border-white/5 rounded-2xl p-8 hover:border-[#ec4899]/30 hover:bg-[#1a1a24] transition-all group shadow-xl">
-                    <div class="w-14 h-14 rounded-full bg-pink-500/10 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-pink-500/20 transition-all">
+                <div class="bg-white/[0.02] backdrop-blur-md border border-white/10 rounded-2xl p-8 hover:border-[#ec4899]/30 hover:bg-white/[0.04] transition-all duration-500 group shadow-2xl">
+                    <div class="w-14 h-14 rounded-full bg-pink-500/10 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-pink-500/20 transition-all duration-500">
                         <svg class="w-7 h-7 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
                     </div>
                     <h3 class="text-white font-black text-xl uppercase italic mb-3">Certifique-se</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed font-medium">Gere seus certificados e comprove suas horas complementares em um clique.</p>
+                    <p class="text-slate-300 text-base leading-relaxed font-normal">Gere seus certificados e comprove suas horas complementares em um clique.</p>
                 </div>
             </div>
-            
-            <!-- Scrolling mouse indicator down to carousel -->
-            <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 hidden md:flex flex-col items-center gap-2 opacity-50 z-20">
-                <div class="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2">
-                    <div class="w-1.5 h-1.5 bg-white rounded-full animate-bounce"></div>
-                </div>
-                <span class="text-[8px] uppercase tracking-widest text-white/50">Rolar</span>
-            </div>
+
         </section>
 
         <section id="carrossel" class="relative min-h-screen flex flex-col items-center z-10 w-full max-w-[100vw] overflow-hidden grab-cursor no-select pt-24 md:pt-32">
