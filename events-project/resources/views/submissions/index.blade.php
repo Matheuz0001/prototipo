@@ -77,8 +77,8 @@
                                         <td class="px-4 py-6">
                                             <form action="{{ route('submissions.schedule', $work) }}" method="POST" class="flex flex-col gap-2 w-full">
                                                 @csrf
-                                                <input type="datetime-local" name="presentation_date" value="{{ $work->presentation_date ? $work->presentation_date->format('Y-m-d\TH:i') : '' }}" 
-                                                        class="text-[9px] font-black uppercase rounded-xl bg-[#121214] border-white/10 text-slate-400 py-2 px-3 w-full" required>
+                                                <input type="text" name="presentation_date" value="{{ $work->presentation_date ? $work->presentation_date->format('Y-m-d H:i') : '' }}" 
+                                                        class="flatpickr-datetime text-[9px] font-black uppercase rounded-xl bg-[#121214] border-white/10 text-slate-400 py-2 px-3 w-full" placeholder="Data e Hora..." required>
                                                 
                                                 <input type="text" name="presentation_room" value="{{ $work->presentation_room }}" placeholder="Sala/Link"
                                                         class="text-[9px] font-black uppercase rounded-xl bg-[#121214] border-white/10 text-slate-400 py-2 px-3 w-full" required>

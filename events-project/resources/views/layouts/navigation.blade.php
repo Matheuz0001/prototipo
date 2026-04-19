@@ -22,9 +22,7 @@
                         <x-nav-link :href="route('events.index')" :active="request()->routeIs('events.*')" class="text-[10px] font-black uppercase tracking-widest">
                             {{ __('Gestão de Eventos') }}
                         </x-nav-link>
-                        <x-nav-link :href="route('organization.payments.index')" :active="request()->routeIs('organization.payments.index')" class="text-[10px] font-black uppercase tracking-widest">
-                            {{ __('Validar Pix') }}
-                        </x-nav-link>
+
                         <x-nav-link :href="route('submissions.index')" :active="request()->routeIs('submissions.index')" class="text-[10px] font-black uppercase tracking-widest">
                             {{ __('Grade Científica') }}
                         </x-nav-link>
@@ -95,9 +93,7 @@
                 <x-responsive-nav-link :href="route('events.index')" :active="request()->routeIs('events.*')" class="rounded-2xl font-black uppercase text-[10px] tracking-widest py-4">
                     {{ __('Gestão de Eventos') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('organization.payments.index')" :active="request()->routeIs('organization.payments.index')" class="rounded-2xl font-black uppercase text-[10px] tracking-widest py-4">
-                    {{ __('Validar Pix') }}
-                </x-responsive-nav-link>
+
                 <x-responsive-nav-link :href="route('attendance.scanner')" :active="request()->routeIs('attendance.scanner')" class="rounded-2xl font-black uppercase text-[10px] tracking-widest py-4 text-indigo-400">
                     {{ __('Check-in Mobile') }}
                 </x-responsive-nav-link>

@@ -56,12 +56,12 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <x-input-label for="event_date" :value="__('Data da Realização')" class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 ms-4" />
-                                    <x-text-input id="event_date" class="block mt-1 w-full bg-[#121214] border-white/10 focus:border-indigo-500 focus:ring-indigo-500 rounded-2xl shadow-sm text-[#f0eee9]" type="datetime-local" name="event_date" :value="old('event_date')" required />
+                                    <x-text-input id="event_date" class="flatpickr-datetime block mt-1 w-full bg-[#121214] border-white/10 focus:border-indigo-500 focus:ring-indigo-500 rounded-2xl shadow-sm text-[#f0eee9]" type="text" name="event_date" :value="old('event_date')" required />
                                     <x-input-error :messages="$errors->get('event_date')" class="mt-2 text-xs font-bold text-red-500" />
                                 </div>
                                 <div>
                                     <x-input-label for="registration_deadline" :value="__('Fim das Inscrições')" class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 ms-4" />
-                                    <x-text-input id="registration_deadline" class="block mt-1 w-full bg-[#121214] border-white/10 focus:border-indigo-500 focus:ring-indigo-500 rounded-2xl shadow-sm text-[#f0eee9]" type="datetime-local" name="registration_deadline" :value="old('registration_deadline')" required />
+                                    <x-text-input id="registration_deadline" class="flatpickr-datetime block mt-1 w-full bg-[#121214] border-white/10 focus:border-indigo-500 focus:ring-indigo-500 rounded-2xl shadow-sm text-[#f0eee9]" type="text" name="registration_deadline" :value="old('registration_deadline')" required />
                                     <x-input-error :messages="$errors->get('registration_deadline')" class="mt-2 text-xs font-bold text-red-500" />
                                 </div>
                             </div>

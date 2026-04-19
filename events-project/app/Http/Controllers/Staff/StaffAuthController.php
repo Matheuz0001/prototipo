@@ -64,7 +64,26 @@ class StaffAuthController extends Controller
             abort(403, 'Acesso Negado: O tempo de 4h deste convite expirou. Solicite ao Coordenador um link novo.');
         }
 
-        // Autentica e redireciona (o link pode ser reutilizado dentro da janela de 4h)
+        // 3. Link já utilizado (Single-Use Anti-Bot)
+        if ($magicLink->used_at) {
+            abort(403, 'Acesso Negado: Este link mágico já foi utilizado.');
+        }
+
+        return view('staff.login', compact('token', 'magicLink'));
+    }
+
+    public function confirm($token)
+    {
+        $magicLink = MagicLink::where('token', $token)->first();
+
+        if (!$magicLink || $magicLink->expires_at < now() || $magicLink->used_at) {
+            abort(403, 'Link expirado, inexistente ou já utilizado.');
+        }
+
+        // Consumindo token
+        $magicLink->update(['used_at' => now()]);
+
+        // Autentica e redireciona
         Auth::loginUsingId($magicLink->user_id);
         session(['staff_event_id' => $magicLink->event_id]);
 

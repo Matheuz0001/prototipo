@@ -235,17 +235,7 @@
                             </div>
                         </a>
 
-                        <a href="{{ route('organization.payments.index') }}" class="group p-10 bg-[#0a0a0a] border border-white/5 rounded-2xl hover:border-emerald-500/40 transition-all relative overflow-hidden">
-                            <div class="flex items-center gap-6 relative z-10">
-                                <div class="w-16 h-16 bg-emerald-500/10 text-emerald-400 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-500 shadow-xl">
-                                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                </div>
-                                <div>
-                                    <h4 class="font-black text-2xl text-white uppercase italic">Validar Pagamentos</h4>
-                                    <p class="text-sm text-slate-500 mt-1 font-medium">Análise de comprovantes Pix e aprovações.</p>
-                                </div>
-                            </div>
-                        </a>
+
 
                         <a href="{{ route('attendance.scanner') }}" class="group p-10 bg-[#0a0a0a] border border-white/5 rounded-2xl hover:border-white/20 transition-all relative overflow-hidden">
                             <div class="flex items-center gap-6 relative z-10">

@@ -36,6 +36,15 @@
             .no-select { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; -webkit-user-drag: none; }
             .grab-cursor { cursor: grab; }
             .grab-cursor:active { cursor: grabbing; }
+
+            /* Marquee Animation */
+            @keyframes marquee {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-50%); }
+            }
+            .animate-marquee {
+                animation: marquee 20s linear infinite;
+            }
         </style>
     </head>
     <body class="font-sans antialiased bg-[#121214] overflow-x-hidden max-w-[100vw] w-full text-[#f0eee9]" 
@@ -118,96 +127,108 @@
             <div class="absolute inset-0 bg-[#121214]/70"></div>
         </div>
 
-        <nav class="fixed top-0 w-full nav-blur z-[200] border-b border-white/5">
+        <nav class="fixed top-0 w-full nav-blur z-[200] border-b border-white/5 py-4">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between h-16">
-                    <div class="flex items-center">
+                <div class="flex items-center justify-between h-10">
+                    <div class="flex-shrink-0 flex items-center">
                         <x-application-logo class="w-auto h-8 object-contain" />
                     </div>
                     <div class="flex items-center gap-6">
                         @auth
-                            <div class="flex items-center gap-4">
-                                <a href="{{ url('/dashboard') }}" class="px-6 py-3 bg-gradient-to-r from-[#4f46e5] to-[#9333ea] text-white rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-indigo-500/20 hover:scale-105 transition-all">Painel</a>
+                            <div class="flex items-center gap-6">
                                 <form method="POST" action="{{ route('logout') }}" class="inline">
                                     @csrf
-                                    <button type="submit" class="text-[10px] font-black text-white/40 hover:text-red-500 uppercase tracking-widest transition-colors">Sair</button>
+                                    <button type="submit" class="text-[11px] font-black text-white/70 hover:text-white uppercase tracking-widest transition-colors">SAIR</button>
                                 </form>
+                                <a href="{{ url('/dashboard') }}" class="px-6 py-3 bg-gradient-to-r from-[#4f46e5] to-[#9333ea] text-white rounded-xl text-[11px] font-black uppercase tracking-widest shadow-[0_0_20px_rgba(79,70,229,0.3)] hover:shadow-[0_0_25px_rgba(79,70,229,0.5)] hover:-translate-y-0.5 transition-all">PAINEL</a>
                             </div>
                         @else
-                            <a href="{{ route('login') }}" class="text-[10px] font-black hover:text-[#4f46e5] uppercase tracking-widest transition-colors">Entrar</a>
-                            <a href="{{ route('register') }}" class="px-6 py-3 bg-gradient-to-r from-[#4f46e5] to-[#9333ea] text-white rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-indigo-500/20 hover:scale-105 transition-all">Criar Conta</a>
+                            <a href="{{ route('login') }}" class="text-[11px] font-black text-white/90 hover:text-white uppercase tracking-widest transition-colors">ENTRAR</a>
+                            <a href="{{ route('register') }}" class="px-6 py-2.5 bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-xl text-[11px] font-black uppercase tracking-widest shadow-[0_0_20px_rgba(99,102,241,0.3)] hover:shadow-[0_0_30px_rgba(99,102,241,0.5)] hover:-translate-y-0.5 transition-all">CRIAR CONTA</a>
                         @endauth
                     </div>
                 </div>
             </div>
         </nav>
 
-        <section class="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-16 z-10 w-full px-4 sm:px-6 lg:px-8">
-            <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-gradient-to-r from-purple-600/30 to-indigo-600/30 rounded-full blur-[140px] pointer-events-none z-0"></div>
-            <!-- Hero Content -->
-            <div class="text-center w-full max-w-4xl mx-auto z-20 mt-16 md:mt-24 mb-16 relative">
-                <!-- Eyebrow -->
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-black uppercase tracking-widest mb-6">
-                    <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
-                    </span>
-                    O Novo Padrão Acadêmico
-                </div>
+        <!-- HERO E MARQUEE COM PARTÍCULAS COMPARTILHADAS -->
+        <div class="relative w-full overflow-hidden z-10">
+            <!-- tsParticles Container - Rede Neural -->
+            <div id="tsparticles" class="absolute inset-0 w-full h-full -z-10 pointer-events-none"></div>
+            
+            <!-- Glow Central -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-full blur-[120px] pointer-events-none -z-10"></div>
+            
+            <!-- HERO SECTION REFATORADO: Design Linear / Luma -->
+            <section class="relative min-h-[90vh] flex flex-col items-center justify-center pt-32 pb-10 z-10 w-full px-4 sm:px-6 lg:px-8">
                 
-                <h1 class="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter uppercase italic text-white leading-[1.1] mb-6">
-                    Conectando mentes.<br> 
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-500 to-indigo-600">Movendo a ciência.</span>
-                </h1>
-                
-                <p class="text-slate-300 text-lg md:text-2xl font-normal leading-loose tracking-wide max-w-3xl mx-auto mb-10 drop-shadow-md">
-                    O PÁTIO é a sua plataforma unificada para descobrir eventos acadêmicos, submeter trabalhos científicos e gerenciar suas participações de forma simples.
-                </p>
-                
-                <!-- CTA Buttons -->
-                <div class="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">
-                    <a href="#carrossel" class="px-8 py-4 bg-gradient-to-r from-[#4f46e5] to-[#9333ea] text-white font-black rounded-2xl uppercase tracking-widest hover:scale-105 hover:shadow-[0_0_30px_rgba(79,70,229,0.5)] transition-all duration-500 flex items-center justify-center gap-2 group w-full sm:w-[280px]">
+                <!-- Hero Content -->
+                <div class="text-center w-full max-w-5xl mx-auto z-20 relative flex flex-col items-center">
+                    <h1 class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-white leading-[1.05] mb-8 uppercase italic">
+                        CONECTANDO MENTES.<br> 
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-500">MOVENDO A CIÊNCIA.</span>
+                    </h1>
+                    
+                    <p class="text-gray-400 max-w-2xl text-lg mb-12">
+                        A plataforma unificada para gestão simplificada de eventos, congressos e a submissão de trabalhos científicos.
+                    </p>
+                    
+                    <!-- CTA Button -->
+                    <a href="#carrossel" class="px-8 py-4 bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-black rounded-lg uppercase tracking-widest hover:-translate-y-0.5 shadow-[0_0_20px_rgba(99,102,241,0.3)] hover:shadow-[0_0_30px_rgba(99,102,241,0.5)] transition-all duration-300 flex items-center justify-center gap-2 border border-indigo-400/30 w-full sm:w-auto min-w-[240px]">
                         Explorar Eventos
-                        <svg class="w-5 h-5 group-hover:translate-y-1 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                        <svg class="w-4 h-4 ml-1 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
                     </a>
-                    <a href="{{ route('register') }}" class="px-8 py-4 bg-transparent border-2 border-white/10 text-white font-black rounded-2xl uppercase tracking-widest hover:border-indigo-500 hover:bg-indigo-500/10 hover:shadow-[0_0_20px_rgba(79,70,229,0.4)] hover:scale-105 transition-all duration-500 flex items-center justify-center w-full sm:w-[280px]">
-                        Criar Conta
-                    </a>
+                </div>
+            </section>
+
+            <!-- FOOTER MARQUEE (Letreiro Animado Infinito Flutuante) -->
+            <div class="w-full bg-transparent overflow-hidden py-8 relative z-20 pb-16">
+                <!-- Container duplicado para loop contínuo -->
+                <div class="flex animate-marquee w-[200%] sm:w-[150%] lg:w-[100%] drop-shadow-[0_10px_20px_rgba(79,70,229,0.1)]">
+                    @for ($i = 0; $i < 4; $i++)
+                        <div class="flex items-center min-w-max">
+                            <span class="text-white text-3xl md:text-5xl font-black italic tracking-tighter uppercase whitespace-nowrap">DESCUBRA</span>
+                            <img src="{{ asset('images/favicon.png') }}" class="h-10 md:h-12 w-auto mx-12 inline-block opacity-70" alt="P">
+                            <span class="text-white text-3xl md:text-5xl font-black italic tracking-tighter uppercase whitespace-nowrap">SUBMETA</span>
+                            <img src="{{ asset('images/favicon.png') }}" class="h-10 md:h-12 w-auto mx-12 inline-block opacity-70" alt="P">
+                            <span class="text-white text-3xl md:text-5xl font-black italic tracking-tighter uppercase whitespace-nowrap">CERTIFIQUE-SE</span>
+                            <img src="{{ asset('images/favicon.png') }}" class="h-10 md:h-12 w-auto mx-12 inline-block opacity-70" alt="P">
+                        </div>
+                    @endfor
                 </div>
             </div>
+        </div>
 
-            <!-- Value Cards Grid -->
-            <div class="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 relative z-20">
+        <!-- SEÇÃO INDEPENDENTE: Value Cards (Transferidos do Hero) -->
+        <section class="w-full relative z-20 py-16 px-4 border-t border-white/5 bg-gradient-to-b from-black/50 to-transparent">
+            <div class="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Card 1 -->
-                <div class="bg-white/[0.02] backdrop-blur-md border border-white/10 rounded-2xl p-8 hover:border-indigo-500/30 hover:bg-white/[0.04] transition-all duration-500 group shadow-2xl">
-                    <div class="w-14 h-14 rounded-full bg-indigo-500/10 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-indigo-500/20 transition-all duration-500">
-                        <svg class="w-7 h-7 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                <div class="bg-white/[0.02] backdrop-blur-md border border-white/5 rounded-2xl p-8 hover:border-indigo-500/30 hover:bg-white/[0.04] transition-all duration-500 group shadow-2xl">
+                    <div class="w-12 h-12 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-indigo-500/20 transition-all duration-500">
+                        <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                     </div>
-                    <h3 class="text-white font-black text-xl uppercase italic mb-3">Descubra</h3>
-                    <p class="text-slate-300 text-base leading-relaxed font-normal">Encontre simpósios, congressos e palestras na sua área de interesse.</p>
+                    <h3 class="text-white font-black text-lg uppercase tracking-wider mb-3">Descubra</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed font-normal">Encontre simpósios, congressos e palestras na sua área de interesse.</p>
                 </div>
                 
                 <!-- Card 2 -->
-                <div class="bg-white/[0.02] backdrop-blur-md border border-white/10 rounded-2xl p-8 hover:border-purple-500/30 hover:bg-white/[0.04] transition-all duration-500 group shadow-2xl relative overflow-hidden">
-                    <div class="relative">
-                        <div class="w-14 h-14 rounded-full bg-purple-500/10 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-purple-500/20 transition-all duration-500">
-                            <svg class="w-7 h-7 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                        </div>
-                        <h3 class="text-white font-black text-xl uppercase italic mb-3">Submeta</h3>
-                        <p class="text-slate-300 text-base leading-relaxed font-normal">Envie seus trabalhos acadêmicos e acompanhe a avaliação em tempo real.</p>
+                <div class="bg-white/[0.02] backdrop-blur-md border border-white/5 rounded-2xl p-8 hover:border-purple-500/30 hover:bg-white/[0.04] transition-all duration-500 group shadow-2xl relative overflow-hidden">
+                    <div class="w-12 h-12 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-purple-500/20 transition-all duration-500">
+                        <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                     </div>
+                    <h3 class="text-white font-black text-lg uppercase tracking-wider mb-3">Submeta</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed font-normal">Envie seus trabalhos acadêmicos e acompanhe a avaliação em tempo real.</p>
                 </div>
 
                 <!-- Card 3 -->
-                <div class="bg-white/[0.02] backdrop-blur-md border border-white/10 rounded-2xl p-8 hover:border-[#ec4899]/30 hover:bg-white/[0.04] transition-all duration-500 group shadow-2xl">
-                    <div class="w-14 h-14 rounded-full bg-pink-500/10 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-pink-500/20 transition-all duration-500">
-                        <svg class="w-7 h-7 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
+                <div class="bg-white/[0.02] backdrop-blur-md border border-white/5 rounded-2xl p-8 hover:border-pink-500/30 hover:bg-white/[0.04] transition-all duration-500 group shadow-2xl">
+                    <div class="w-12 h-12 rounded-lg bg-pink-500/10 border border-pink-500/20 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-pink-500/20 transition-all duration-500">
+                        <svg class="w-5 h-5 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
                     </div>
-                    <h3 class="text-white font-black text-xl uppercase italic mb-3">Certifique-se</h3>
-                    <p class="text-slate-300 text-base leading-relaxed font-normal">Gere seus certificados e comprove suas horas complementares em um clique.</p>
+                    <h3 class="text-white font-black text-lg uppercase tracking-wider mb-3">Certifique-se</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed font-normal">Gere seus certificados e comprove suas horas complementares em um clique.</p>
                 </div>
             </div>
-
         </section>
 
         <section id="carrossel" class="relative min-h-screen flex flex-col items-center z-10 w-full max-w-[100vw] overflow-hidden grab-cursor no-select pt-24 md:pt-32">
@@ -321,5 +342,68 @@
                 </p>
             </div>
         </footer>
+
+        <!-- tsParticles scripts -->
+        <script src="https://cdn.jsdelivr.net/npm/tsparticles@3.0.3/tsparticles.bundle.min.js"></script>
+        <script>
+            (async () => {
+                const particlesContainer = await tsParticles.load({
+                    id: "tsparticles",
+                    options: {
+                        fullScreen: { enable: false, zIndex: 0 },
+                        particles: {
+                            number: { value: 60, density: { enable: true, width: 800 } },
+                            color: { value: ["#4f46e5", "#9333ea"] },
+                            shape: { type: "circle" },
+                            opacity: { value: 0.5, random: true },
+                            size: { value: { min: 1, max: 3 } },
+                            links: {
+                                enable: true,
+                                distance: 140,
+                                color: "#6366f1",
+                                opacity: 0.15,
+                                width: 1
+                            },
+                            move: {
+                                enable: true,
+                                speed: 0.5,
+                                direction: "none",
+                                random: false,
+                                straight: false,
+                                outModes: { default: "out" }
+                            }
+                        },
+                        interactivity: {
+                            detectsOn: "window",
+                            events: {
+                                onHover: { enable: true, mode: "grab" },
+                                onClick: { enable: true, mode: "push" },
+                                resize: true
+                            },
+                            modes: {
+                                grab: { distance: 180, links: { opacity: 0.3 } },
+                                push: { quantity: 2 }
+                            }
+                        },
+                        detectRetina: true
+                    }
+                });
+
+                // Optimization: intersection observer pause/play particles 
+                const DOMcontainer = document.getElementById('tsparticles');
+                if (DOMcontainer && particlesContainer) {
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                particlesContainer.play();
+                            } else {
+                                particlesContainer.pause();
+                            }
+                        });
+                    }, { threshold: 0.05 });
+                    observer.observe(DOMcontainer);
+                }
+            })();
+        </script>
     </body>
 </html>

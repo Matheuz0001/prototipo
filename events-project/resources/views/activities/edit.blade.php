@@ -56,16 +56,16 @@
                         <!-- Data/Hora de Início -->
                         <div>
                             <label for="start_time" class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 block">Data e Hora de Início</label>
-                            <input id="start_time" type="datetime-local" name="start_time" value="{{ old('start_time', \Carbon\Carbon::parse($activity->start_time)->format('Y-m-d\TH:i')) }}" required
-                                class="w-full bg-[#121214] border border-white/10 rounded-xl text-white px-4 py-3 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all shadow-inner">
+                            <input id="start_time" type="text" name="start_time" value="{{ old('start_time', \Carbon\Carbon::parse($activity->start_time)->format('Y-m-d H:i')) }}" required
+                                class="flatpickr-datetime w-full bg-[#121214] border border-white/10 rounded-xl text-white px-4 py-3 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all shadow-inner placeholder-slate-600">
                             <x-input-error :messages="$errors->get('start_time')" class="mt-2 text-[10px] font-bold text-red-500 uppercase" />
                         </div>
 
                         <!-- Data/Hora de Fim -->
                         <div>
                             <label for="end_time" class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 block">Data e Hora de Fim</label>
-                            <input id="end_time" type="datetime-local" name="end_time" value="{{ old('end_time', \Carbon\Carbon::parse($activity->end_time)->format('Y-m-d\TH:i')) }}" required
-                                class="w-full bg-[#121214] border border-white/10 rounded-xl text-white px-4 py-3 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all shadow-inner">
+                            <input id="end_time" type="text" name="end_time" value="{{ old('end_time', \Carbon\Carbon::parse($activity->end_time)->format('Y-m-d H:i')) }}" required
+                                class="flatpickr-datetime w-full bg-[#121214] border border-white/10 rounded-xl text-white px-4 py-3 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all shadow-inner placeholder-slate-600">
                             <x-input-error :messages="$errors->get('end_time')" class="mt-2 text-[10px] font-bold text-red-500 uppercase" />
                         </div>
                     </div>

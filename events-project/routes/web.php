@@ -30,6 +30,7 @@ use App\Http\Controllers\Staff\StaffDashboardController;
 Route::get('/', [PublicEventController::class, 'index'])->name('home');
 Route::get('/eventos/{event}', [PublicEventController::class, 'show'])->name('events.public.show');
 Route::get('/staff/login/{token}', [StaffAuthController::class, 'login'])->name('staff.magic_login');
+Route::post('/staff/login/{token}/confirm', [StaffAuthController::class, 'confirm'])->name('staff.magic_login.confirm');
 
 // --- ROTAS DO STAFF (Auth sem verificação de email — entrada via Magic Link) ---
 Route::middleware(['auth', 'staff_context'])->prefix('staff/events/{event}')->name('staff.')->group(function () {
@@ -62,7 +63,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/inscription-types/{inscriptionType}', [InscriptionTypeController::class, 'destroy'])->name('inscription_types.destroy');
 
         // Gestão Financeira e Científica
-        Route::get('/organizacao/pagamentos', [PaymentController::class, 'index'])->name('organization.payments.index');
+        Route::get('/events/{event}/validar-pix', [PaymentController::class, 'index'])->name('events.pix.validation');
         Route::post('/organizacao/pagamentos/{inscription}/aprovar', [PaymentController::class, 'approve'])->name('organization.payments.approve');
         Route::post('/organizacao/pagamentos/{inscription}/recusar', [PaymentController::class, 'reject'])->name('organization.payments.reject');
         Route::get('/organizacao/pagamentos/{payment}/download', [PaymentController::class, 'download'])->name('organization.payments.download');

@@ -18,17 +18,21 @@ class PaymentController extends Controller
     /**
      * Mostra o painel de validação de pagamentos para o Organizador. (RF-F3)
      */
-    public function index()
+    public function index(\App\Models\Event $event)
     {
-        // 1. Busca todos os pagamentos com status 'Em Análise' (payments.status = 1)
+        // 1. Busca todos os pagamentos com status 'Em Análise' (payments.status = 1) e filtra pelo evento logado.
         // O with() garante que carregamos o usuário, evento e tipo de inscrição em uma só query.
         $pendingPayments = Payment::where('status', 1) 
+            ->whereHas('inscription', function ($query) use ($event) {
+                $query->where('event_id', $event->id);
+            })
             ->with('inscription.user', 'inscription.event', 'inscription.inscriptionType') 
             ->orderBy('created_at', 'asc')
             ->get();
 
         return view('organization.payments.index', [
-            'pendingPayments' => $pendingPayments
+            'pendingPayments' => $pendingPayments,
+            'event' => $event
         ]);
     }
 
@@ -124,7 +128,7 @@ class PaymentController extends Controller
         // RF_S6: Notificar participante sobre aprovação
         $inscription->user->notify(new PaymentApprovedNotification($inscription->payment));
         
-        return redirect()->route('organization.payments.index')->with('success', 'Pagamento aprovado. Participante notificado.');
+        return redirect()->route('events.pix.validation', $inscription->event)->with('success', 'Pagamento aprovado. Participante notificado.');
     }
 
     /**
@@ -162,7 +166,7 @@ class PaymentController extends Controller
         // RF_S6: Notificar participante sobre recusa
         $inscription->user->notify(new PaymentRejectedNotification($inscription->payment, $rejectionReason));
 
-        return redirect()->route('organization.payments.index')->with('success', 'Pagamento recusado. Participante notificado com justificativa.');
+        return redirect()->route('events.pix.validation', $inscription->event)->with('success', 'Pagamento recusado. Participante notificado com justificativa.');
     }
 
     /**

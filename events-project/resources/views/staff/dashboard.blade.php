@@ -363,6 +363,14 @@
 
         stopScannerBtn.addEventListener('click', async () => {
             if (html5QrcodeScanner) { try { await html5QrcodeScanner.stop(); } catch(e) {} html5QrcodeScanner = null; }
+            
+            // Fix iOS/Safari: Hard kill nos tracks da câmera WebRTC
+            const videoElem = document.querySelector('#reader video');
+            if (videoElem && videoElem.srcObject) {
+                videoElem.srcObject.getTracks().forEach(track => track.stop());
+                videoElem.srcObject = null;
+            }
+
             readerContainer.classList.add('hidden');
             stopScannerBtn.classList.add('hidden');
             startScannerBtn.classList.remove('hidden');
