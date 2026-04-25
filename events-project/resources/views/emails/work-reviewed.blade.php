@@ -1,12 +1,14 @@
 <x-mail::message>
-# Introduction
+# Resultado da Avaliação
 
-The body of your message.
+Olá, seu trabalho acadêmico foi avaliado pelo comitê científico.
 
-<x-mail::button :url="''">
-Button Text
+Acesse seu painel para conferir o parecer detalhado e os comentários do avaliador.
+
+<x-mail::button :url="config('app.url') . '/dashboard'">
+Ver Resultado
 </x-mail::button>
 
-Thanks,<br>
-{{ config('app.name') }}
+Atenciosamente,<br>
+Equipe {{ config('app.name') }}
 </x-mail::message>

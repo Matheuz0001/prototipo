@@ -35,7 +35,7 @@
         #reader__dashboard { display: none !important; }
     </style>
 </head>
-<body class="bg-gray-900 text-white min-h-screen antialiased overflow-x-hidden">
+<body class="bg-[#121214] text-white min-h-screen antialiased overflow-x-hidden">
 
     {{-- Ambient Spotlight --}}
     <div id="ambientSpotlight" class="fixed top-[-100px] left-1/2 -translate-x-1/2 w-[500px] h-[350px] rounded-full blur-[130px] pointer-events-none z-0 bg-indigo-500/15 transition-all duration-700"></div>
@@ -48,8 +48,8 @@
         <header class="w-full px-5 pt-6 pb-5 border-b border-white/5">
             <div class="max-w-2xl mx-auto flex items-center justify-between">
                 <div class="min-w-0">
-                    <p class="text-[10px] font-extrabold tracking-[0.25em] uppercase text-indigo-400 mb-1">PÁTIO · Staff</p>
-                    <h1 class="text-lg font-black text-white truncate leading-tight">{{ $event->title }}</h1>
+                    <p class="text-[10px] font-black tracking-[0.25em] uppercase text-indigo-400 mb-1">PÁTIO · Staff</p>
+                    <h1 class="text-lg font-black text-white truncate leading-tight uppercase italic tracking-tighter">{{ $event->title }}</h1>
                 </div>
                 <div class="flex items-center gap-2 shrink-0 ml-4 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-3 py-1.5">
                     <span class="relative flex h-2 w-2">
@@ -67,11 +67,11 @@
         <main class="flex-grow flex flex-col items-center px-4 sm:px-5 py-6 max-w-2xl mx-auto w-full gap-5">
 
             {{-- ─── TABS ─────────────────────────── --}}
-            <div class="w-full flex bg-gray-800/60 rounded-xl p-1 gap-1">
-                <button id="tabScanner" onclick="switchTab('scanner')" class="flex-1 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all bg-indigo-600 text-white">
+            <div class="w-full flex bg-[#0a0a0a] border border-white/5 rounded-2xl p-1 gap-1">
+                <button id="tabScanner" onclick="switchTab('scanner')" class="flex-1 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all bg-indigo-600 text-white">
                     Scanner
                 </button>
-                <button id="tabList" onclick="switchTab('list')" class="flex-1 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all text-gray-400 hover:text-white">
+                <button id="tabList" onclick="switchTab('list')" class="flex-1 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all text-slate-500 hover:text-white">
                     Participantes
                 </button>
             </div>
@@ -82,7 +82,7 @@
             <div id="panelScanner" class="w-full flex flex-col gap-5">
 
                 {{-- Card Scanner --}}
-                <div class="w-full bg-gray-800/60 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-5 sm:p-6 relative overflow-hidden" id="mainCard">
+                <div class="w-full bg-[#0a0a0a] backdrop-blur-xl border border-white/5 rounded-2xl shadow-2xl p-5 sm:p-6 relative overflow-hidden" id="mainCard">
                     <div class="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-indigo-500 via-purple-500 to-emerald-500"></div>
 
                     {{-- Feedback Overlay --}}
@@ -94,10 +94,10 @@
                         </div>
                     </div>
 
-                    <p class="text-[10px] font-extrabold text-gray-500 uppercase tracking-[0.2em] text-center mb-5">Terminal de Check-in</p>
+                    <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest text-center mb-5">Terminal de Check-in</p>
 
                     {{-- Scanner Area --}}
-                    <div id="reader-container" class="hidden w-full aspect-square rounded-xl overflow-hidden border-2 border-white/10 bg-black relative mb-5">
+                    <div id="reader-container" class="hidden w-full aspect-square rounded-2xl overflow-hidden border-2 border-white/10 bg-black relative mb-5">
                         <div id="reader" class="w-full h-full"></div>
                         <div class="absolute inset-0 pointer-events-none z-10">
                             <div class="absolute top-3 left-3 w-8 h-8 border-t-2 border-l-2 border-indigo-400 rounded-tl-lg"></div>
@@ -109,28 +109,25 @@
                     </div>
 
                     {{-- CTA: Iniciar Scanner --}}
-                    <button id="startScannerBtn" class="w-full py-5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-extrabold text-base uppercase tracking-widest shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 9V7a2 2 0 012-2h2M15 3h2a2 2 0 012 2v2M3 15v2a2 2 0 002 2h2M15 21h2a2 2 0 002-2v-2"/>
-                        </svg>
+                    <button id="startScannerBtn" class="w-full py-5 rounded-2xl bg-gradient-to-r from-[#4f46e5] to-[#9333ea] text-white font-black text-sm uppercase tracking-widest shadow-xl shadow-indigo-500/20 hover:shadow-[0_0_30px_rgba(79,70,229,0.4)] hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center">
                         Iniciar Scanner
                     </button>
 
                     {{-- Parar Scanner --}}
-                    <button id="stopScannerBtn" class="hidden w-full py-3.5 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 font-bold text-sm uppercase tracking-widest hover:bg-red-500/20 transition-all mt-3">
+                    <button id="stopScannerBtn" class="hidden w-full py-3.5 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-400 font-black text-[10px] uppercase tracking-widest hover:bg-red-500/20 transition-all mt-3">
                         Parar Scanner
                     </button>
                 </div>
 
                 {{-- Busca Manual --}}
-                <div class="w-full bg-gray-800/40 backdrop-blur-lg border border-white/5 rounded-2xl p-5">
-                    <p class="text-[10px] font-extrabold text-gray-500 uppercase tracking-[0.2em] mb-3 flex items-center gap-2">
-                        <svg class="w-3.5 h-3.5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <div class="w-full bg-[#0a0a0a] backdrop-blur-lg border border-white/5 rounded-2xl p-5">
+                    <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3 flex items-center gap-2">
+                        <svg class="w-3.5 h-3.5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                         Busca Manual
                     </p>
                     <form id="manualCheckinForm" class="flex gap-3">
-                        <input type="text" id="manualCodeInput" class="flex-grow bg-gray-900 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 text-sm font-mono tracking-wider focus:outline-none focus:ring-2 focus:ring-indigo-500/40 transition-all" placeholder="ID do ingresso...">
-                        <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl px-5 py-3 font-bold text-sm uppercase tracking-wider transition-all shadow-lg shadow-indigo-600/20 active:scale-95 shrink-0">
+                        <input type="text" id="manualCodeInput" class="flex-grow bg-[#121214] border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-600 text-sm font-mono tracking-wider focus:outline-none focus:ring-2 focus:ring-indigo-500/40 transition-all" placeholder="ID do ingresso...">
+                        <button type="submit" class="bg-gradient-to-r from-[#4f46e5] to-[#9333ea] hover:shadow-indigo-500/30 text-white rounded-xl px-5 py-3 font-black text-[10px] uppercase tracking-widest transition-all shadow-lg shadow-indigo-600/20 active:scale-95 shrink-0">
                             Validar
                         </button>
                     </form>
@@ -144,25 +141,25 @@
 
                 {{-- Contadores --}}
                 <div class="grid grid-cols-3 gap-3">
-                    <div class="bg-gray-800/60 border border-white/5 rounded-xl p-4 text-center">
+                    <div class="bg-[#0a0a0a] border border-white/5 rounded-2xl p-4 text-center">
                         <p class="text-2xl font-black text-white">{{ $validated->count() + $pending->count() }}</p>
-                        <p class="text-[9px] font-bold text-gray-500 uppercase tracking-widest mt-1">Inscritos</p>
+                        <p class="text-[9px] font-black text-slate-500 uppercase tracking-widest mt-1">Inscritos</p>
                     </div>
-                    <div class="bg-emerald-900/30 border border-emerald-500/20 rounded-xl p-4 text-center">
+                    <div class="bg-emerald-500/5 border border-emerald-500/20 rounded-2xl p-4 text-center">
                         <p class="text-2xl font-black text-emerald-400">{{ $validated->count() }}</p>
                         <p class="text-[9px] font-bold text-emerald-500/70 uppercase tracking-widest mt-1">Validados</p>
                     </div>
-                    <div class="bg-amber-900/20 border border-amber-500/20 rounded-xl p-4 text-center">
+                    <div class="bg-amber-500/5 border border-amber-500/20 rounded-2xl p-4 text-center">
                         <p class="text-2xl font-black text-amber-400">{{ $pending->count() }}</p>
                         <p class="text-[9px] font-bold text-amber-500/70 uppercase tracking-widest mt-1">Pendentes</p>
                     </div>
                 </div>
 
                 {{-- Filtro --}}
-                <div class="flex bg-gray-800/60 rounded-xl p-1 gap-1">
-                    <button onclick="filterList('all')" id="filterAll" class="flex-1 py-2 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all bg-white/10 text-white">Todos</button>
-                    <button onclick="filterList('validated')" id="filterValidated" class="flex-1 py-2 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all text-gray-400 hover:text-white">Validados</button>
-                    <button onclick="filterList('pending')" id="filterPending" class="flex-1 py-2 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all text-gray-400 hover:text-white">Pendentes</button>
+                <div class="flex bg-[#0a0a0a] border border-white/5 rounded-2xl p-1 gap-1">
+                    <button onclick="filterList('all')" id="filterAll" class="flex-1 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all bg-white/10 text-white">Todos</button>
+                    <button onclick="filterList('validated')" id="filterValidated" class="flex-1 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all text-slate-500 hover:text-white">Validados</button>
+                    <button onclick="filterList('pending')" id="filterPending" class="flex-1 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all text-slate-500 hover:text-white">Pendentes</button>
                 </div>
 
                 {{-- Lista --}}
@@ -170,14 +167,14 @@
 
                     @forelse($validated as $inscription)
                     <div class="participant-row" data-status="validated">
-                        <div class="flex items-center justify-between p-4 bg-gray-800/50 border border-white/5 rounded-xl hover:border-emerald-500/20 transition-all">
+                        <div class="flex items-center justify-between p-4 bg-[#0a0a0a] border border-white/5 rounded-2xl hover:border-emerald-500/20 transition-all">
                             <div class="flex items-center gap-3 min-w-0">
                                 <div class="w-9 h-9 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0">
                                     <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
                                 </div>
                                 <div class="min-w-0">
                                     <p class="text-sm font-bold text-white truncate">{{ $inscription->user->name }}</p>
-                                    <p class="text-[10px] text-gray-500 truncate">{{ $inscription->inscriptionType->type ?? 'N/A' }} · #{{ $inscription->id }}</p>
+                                    <p class="text-[10px] text-slate-500 truncate">{{ $inscription->inscriptionType->type ?? 'N/A' }} · #{{ $inscription->id }}</p>
                                 </div>
                             </div>
                             <span class="text-[9px] font-bold text-emerald-400 uppercase tracking-wider bg-emerald-500/10 px-2.5 py-1 rounded-full shrink-0 ml-2">Validado</span>
@@ -188,14 +185,14 @@
 
                     @forelse($pending as $inscription)
                     <div class="participant-row" data-status="pending">
-                        <div class="flex items-center justify-between p-4 bg-gray-800/50 border border-white/5 rounded-xl hover:border-amber-500/20 transition-all">
+                        <div class="flex items-center justify-between p-4 bg-[#0a0a0a] border border-white/5 rounded-2xl hover:border-amber-500/20 transition-all">
                             <div class="flex items-center gap-3 min-w-0">
                                 <div class="w-9 h-9 rounded-full bg-amber-500/10 flex items-center justify-center shrink-0">
                                     <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                 </div>
                                 <div class="min-w-0">
                                     <p class="text-sm font-bold text-white truncate">{{ $inscription->user->name }}</p>
-                                    <p class="text-[10px] text-gray-500 truncate">{{ $inscription->inscriptionType->type ?? 'N/A' }} · #{{ $inscription->id }}</p>
+                                    <p class="text-[10px] text-slate-500 truncate">{{ $inscription->inscriptionType->type ?? 'N/A' }} · #{{ $inscription->id }}</p>
                                 </div>
                             </div>
                             <span class="text-[9px] font-bold text-amber-400 uppercase tracking-wider bg-amber-500/10 px-2.5 py-1 rounded-full shrink-0 ml-2">Pendente</span>
@@ -205,8 +202,8 @@
                     @endforelse
 
                     @if($validated->isEmpty() && $pending->isEmpty())
-                    <div class="text-center py-12 border border-dashed border-white/5 rounded-xl">
-                        <p class="text-sm text-gray-600 font-semibold">Nenhum participante inscrito neste evento.</p>
+                    <div class="text-center py-12 border-2 border-dashed border-white/10 rounded-2xl">
+                        <p class="text-sm text-slate-500 font-black uppercase tracking-widest italic">Nenhum participante inscrito neste evento.</p>
                     </div>
                     @endif
                 </div>
@@ -216,7 +213,7 @@
 
         {{-- FOOTER --}}
         <footer class="w-full py-4 text-center border-t border-white/5">
-            <p class="text-[10px] text-gray-600 font-semibold uppercase tracking-widest">PÁTIO © {{ date('Y') }}</p>
+            <p class="text-[10px] text-slate-600 font-black uppercase tracking-widest">PÁTIO © {{ date('Y') }}</p>
         </footer>
     </div>
 

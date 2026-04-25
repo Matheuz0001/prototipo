@@ -147,22 +147,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/debug-work/{id}', function($id) {
-        $work = \App\Models\Work::find($id);
-        
-        if(!$work) {
-            return "Trabalho não encontrado no banco.";
-        }
 
-        dd([
-            '1. CAMINHO NO BANCO DE DADOS' => $work->file_path,
-            '2. EXISTE NO DISCO LOCAL?' => \Illuminate\Support\Facades\Storage::disk('local')->exists((string) $work->file_path),
-            '3. EXISTE NO DISCO PUBLIC?' => \Illuminate\Support\Facades\Storage::disk('public')->exists((string) $work->file_path),
-            '4. ONDE O LARAVEL ESTA PROCURANDO (Local)' => storage_path('app/' . $work->file_path),
-        ]);
-    });
 
-    
 });
 
 require __DIR__.'/auth.php';

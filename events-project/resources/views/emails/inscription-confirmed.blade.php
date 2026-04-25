@@ -1,12 +1,14 @@
 <x-mail::message>
-# Introduction
+# Inscrição Confirmada
 
-The body of your message.
+Olá, sua inscrição foi realizada com sucesso em nossa plataforma!
 
-<x-mail::button :url="''">
-Button Text
+O próximo passo é realizar o pagamento para confirmar sua participação no evento. Acesse seu painel para enviar o comprovante.
+
+<x-mail::button :url="config('app.url') . '/dashboard'">
+Acessar Meu Painel
 </x-mail::button>
 
-Thanks,<br>
-{{ config('app.name') }}
+Atenciosamente,<br>
+Equipe {{ config('app.name') }}
 </x-mail::message>

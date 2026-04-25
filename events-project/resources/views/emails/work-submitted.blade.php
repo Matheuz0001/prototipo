@@ -1,12 +1,14 @@
 <x-mail::message>
-# Introduction
+# Trabalho Recebido
 
-The body of your message.
+Olá, seu trabalho acadêmico foi submetido com sucesso!
 
-<x-mail::button :url="''">
-Button Text
+Ele será encaminhado ao comitê científico para avaliação. Você será notificado assim que o parecer estiver disponível.
+
+<x-mail::button :url="config('app.url') . '/dashboard'">
+Acompanhar Submissão
 </x-mail::button>
 
-Thanks,<br>
-{{ config('app.name') }}
+Atenciosamente,<br>
+Equipe {{ config('app.name') }}
 </x-mail::message>

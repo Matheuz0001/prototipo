@@ -1,12 +1,21 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-black text-2xl text-white tracking-tighter uppercase italic">
-                {{ __('Gestão de Eventos') }}
-            </h2>
-            <a href="{{ route('events.create') }}" class="px-6 py-3 bg-gradient-to-r from-[#4f46e5] to-[#9333ea] text-white rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-xl hover:scale-105 transition-all">
-                + Criar Novo Evento
-            </a>
+        <div class="flex flex-col md:flex-row justify-between items-center mb-2 gap-4">
+            <h1 class="text-4xl font-black italic text-white uppercase tracking-wider">
+                GESTÃO DE <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-500">EVENTOS</span>
+            </h1>
+            <div class="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
+                <div class="relative w-full max-w-md">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <svg class="h-4 w-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                    <input type="text" id="managerSearchInput" placeholder="Buscar eventos..."
+                        class="w-full bg-[#121214] border border-white/10 text-white rounded-xl pl-10 pr-4 py-2 text-[10px] font-black uppercase tracking-widest focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all placeholder-slate-600">
+                </div>
+                <a href="{{ route('events.create') }}" class="px-6 py-3 bg-gradient-to-r from-[#4f46e5] to-[#9333ea] text-white rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-xl hover:scale-105 transition-all whitespace-nowrap">
+                    + Criar Novo Evento
+                </a>
+            </div>
         </div>
     </x-slot>
 
@@ -28,7 +37,7 @@
                             </thead>
                             <tbody class="divide-y divide-white/5">
                                 @forelse ($events as $event)
-                                    <tr class="hover:bg-white/5 transition-colors group">
+                                    <tr class="manager-event-row hover:bg-white/5 transition-colors group" data-title="{{ strtolower($event->title) }}">
                                         <td class="px-6 py-6">
                                             <div class="flex items-center gap-4">
                                                 @if($event->cover_image_path)
@@ -39,14 +48,14 @@
                                                     </div>
                                                 @endif
                                                 <div>
-                                                    <div class="text-sm font-black text-white uppercase italic">{{ $event->title }}</div>
+                                                    <div class="text-white font-bold text-base uppercase tracking-wide">{{ $event->title }}</div>
                                                     <div class="text-[10px] font-bold text-indigo-400 mt-1 uppercase tracking-widest">R$ {{ number_format($event->registration_fee, 2, ',', '.') }}</div>
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="px-6 py-6">
-                                            <div class="text-xs font-bold text-slate-300">{{ \Carbon\Carbon::parse($event->event_date)->format('d/m/Y H:i') }}</div>
-                                            <div class="text-[10px] text-slate-500 mt-1 uppercase tracking-tighter">{{ $event->location }}</div>
+                                            <div class="text-gray-400 text-sm font-medium">{{ \Carbon\Carbon::parse($event->event_date)->format('d/m/Y H:i') }}</div>
+                                            <div class="text-gray-400 text-sm font-medium mt-1">{{ $event->location }}</div>
                                         </td>
                                         <td class="px-6 py-6">
                                             <div class="inline-flex items-center px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-xs font-black text-white">
@@ -89,4 +98,26 @@
             </div>
         </div>
     </div>
+    {{-- Live Search: Filtragem client-side da tabela de eventos --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('managerSearchInput');
+            const eventRows = document.querySelectorAll('.manager-event-row');
+
+            if (searchInput) {
+                searchInput.addEventListener('input', function (e) {
+                    const searchTerm = e.target.value.toLowerCase().trim();
+
+                    eventRows.forEach(row => {
+                        const title = row.getAttribute('data-title');
+                        if (title.includes(searchTerm)) {
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    });
+                });
+            }
+        });
+    </script>
 </x-app-layout>

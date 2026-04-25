@@ -27,7 +27,7 @@ class PaymentRejected extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Payment Rejected',
+            subject: 'Pagamento Recusado',
         );
     }
 

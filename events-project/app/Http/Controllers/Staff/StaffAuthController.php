@@ -52,7 +52,7 @@ class StaffAuthController extends Controller
 
     public function login($token)
     {
-        $magicLink = MagicLink::where('token', $token)->first();
+        $magicLink = MagicLink::with('user', 'event')->where('token', $token)->first();
 
         // 1. Token inexistente
         if (!$magicLink) {

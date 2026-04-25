@@ -27,7 +27,7 @@ class WorkSubmitted extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Work Submitted',
+            subject: 'Trabalho Submetido',
         );
     }
 

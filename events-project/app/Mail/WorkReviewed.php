@@ -27,7 +27,7 @@ class WorkReviewed extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Work Reviewed',
+            subject: 'Trabalho Avaliado',
         );
     }
 
